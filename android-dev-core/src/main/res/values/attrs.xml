@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RoundImageView">
+        <attr name="shadowDx" format="dimension" />
+        <attr name="shadowDy" format="dimension" />
+        <attr name="shadowRadius" format="dimension" />
+        <attr name="shadowColor" format="color" />
+        <attr name="outerBorderColor" format="color" />
+        <attr name="outerBorderWidth" format="dimension" />
+        <attr name="cornerRadius" format="dimension" />
+        <!-- <attr name="type" format="enum">
+            <enum name="circle" value="0" />
+            <enum name="roundedRect" value="1" />
+        </attr> -->
+    </declare-styleable>
+
+    <declare-styleable name="FixedAspectRatioLayout">
+        <attr name="ratio" format="float" />
+        <attr name="apply" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="Root">
+        <attr name="marginTop" format="dimension" />
+        <attr name="marginBottom" format="dimension" />
+        <attr name="marginLeft" format="dimension" />
+        <attr name="marginRight" format="dimension" />
+        <attr name="leftIconSrc" format="reference" />
+        <attr name="leftIconSize" format="dimension" />
+        <attr name="leftIconPadding" format="dimension" />
+        <attr name="rightIconSrc" format="reference" />
+        <attr name="rightIconSize" format="dimension" />
+        <attr name="rightIconPadding" format="dimension" />
+        <attr name="topIconSrc" format="reference" />
+        <attr name="topIconSize" format="dimension" />
+        <attr name="topIconPadding" format="dimension" />
+        <attr name="bottomIconSrc" format="reference" />
+        <attr name="bottomIconSize" format="dimension" />
+        <attr name="bottomIconPadding" format="dimension" />
+        <attr name="centerIconSrc" format="reference" />
+        <attr name="centerIconSize" format="dimension" />
+        <attr name="centerIconPadding" format="dimension" />
+        <attr name="alignIconCorner" format="boolean" />
+
+        <attr name="text" format="string" />
+        <attr name="textColor" format="color" />
+        <attr name="textAlign" format="string" />
+        <attr name="textSize" format="dimension" />
+        <attr name="typeFace" format="string" />
+        <attr name="themeSrc" format="string" />
+
+        <attr name="backgroundSrc" format="reference|color" />
+        <attr name="maxLines" format="integer" />
+        <attr name="maxLength" format="integer" />
+        <attr name="textHint" format="string" />
+        <attr name="textHintColor" format="color" />
+        <attr name="textGravity" format="string" />
+
+        <attr name="gravity">
+            <flag name="bottom" value="80" />
+            <flag name="center" value="17" />
+            <flag name="center_horizontal" value="1" />
+            <flag name="center_vertical" value="16" />
+            <flag name="clip_horizontal" value="8" />
+            <flag name="clip_vertical" value="128" />
+            <flag name="end" value="8388613" />
+            <flag name="fill" value="119" />
+            <flag name="fill_horizontal" value="7" />
+            <flag name="fill_vertical" value="112" />
+            <flag name="left" value="3" />
+            <flag name="right" value="5" />
+            <flag name="start" value="8388611" />
+            <flag name="top" value="48" />
+        </attr>
+
+    </declare-styleable>
+
+    <declare-styleable name="RootLayout" parent="Root">
+        <attr name="emptyView" format="reference" />
+        <attr name="progressView" format="reference" />
+        <attr name="errorView" format="reference" />
+
+        <attr name="emptyViewTheme" >
+        <flag name="wrap_content" value="1" />
+        <flag name="match_parent" value="2" />
+        </attr>
+
+        <attr name="progressViewTheme" >
+            <flag name="wrap_content" value="1" />
+        <flag name="match_parent" value="2" />
+       </attr>
+
+        <attr name="errorViewTheme">
+        <flag name="wrap_content" value="1" />
+        <flag name="match_parent" value="2" />
+       </attr>
+    </declare-styleable>
+
+
+    <declare-styleable name="RelativeViewLayout" parent="RootLayout">
+        <attr name="emptyView" />
+        <attr name="progressView" />
+        <attr name="errorView" />
+        <attr name="marginTop" />
+        <attr name="marginBottom" />
+        <attr name="marginLeft" />
+        <attr name="marginRight" />
+        <attr name="emptyViewTheme"  />
+        <attr name="progressViewTheme" />
+        <attr name="errorViewTheme"  />
+        <attr name="emptyViewAlign">
+            <flag name="alignParentBottom" value="12" />
+            <flag name="alignParentTop" value="17" />
+        </attr>
+
+        <attr name="progressViewAlign">
+            <flag name="alignParentBottom" value="12" />
+            <flag name="alignParentTop" value="17" />
+        </attr>
+
+        <attr name="errorViewAlign">
+            <flag name="alignParentBottom" value="12" />
+            <flag name="alignParentTop" value="17" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="FrameViewLayout" parent="RootLayout">
+        <attr name="emptyView" />
+        <attr name="progressView" />
+        <attr name="errorView" />
+        <attr name="marginTop" />
+        <attr name="marginBottom" />
+        <attr name="marginLeft" />
+        <attr name="marginRight" />
+        <attr name="emptyViewTheme"  />
+        <attr name="progressViewTheme" />
+        <attr name="errorViewTheme"  />
+        <attr name="emptyViewGravity">
+            <flag name="bottom" value="80" />
+            <flag name="center" value="17" />
+            <flag name="center_horizontal" value="1" />
+            <flag name="center_vertical" value="16" />
+            <flag name="clip_horizontal" value="8" />
+            <flag name="clip_vertical" value="128" />
+            <flag name="end" value="8388613" />
+            <flag name="fill" value="119" />
+            <flag name="fill_horizontal" value="7" />
+            <flag name="fill_vertical" value="112" />
+            <flag name="left" value="3" />
+            <flag name="right" value="5" />
+            <flag name="start" value="8388611" />
+            <flag name="top" value="48" />
+        </attr>
+
+        <attr name="progressViewGravity">
+            <flag name="bottom" value="80" />
+            <flag name="center" value="17" />
+            <flag name="center_horizontal" value="1" />
+            <flag name="center_vertical" value="16" />
+            <flag name="clip_horizontal" value="8" />
+            <flag name="clip_vertical" value="128" />
+            <flag name="end" value="8388613" />
+            <flag name="fill" value="119" />
+            <flag name="fill_horizontal" value="7" />
+            <flag name="fill_vertical" value="112" />
+            <flag name="left" value="3" />
+            <flag name="right" value="5" />
+            <flag name="start" value="8388611" />
+            <flag name="top" value="48" />
+        </attr>
+
+        <attr name="errorViewGravity">
+            <flag name="bottom" value="80" />
+            <flag name="center" value="17" />
+            <flag name="center_horizontal" value="1" />
+            <flag name="center_vertical" value="16" />
+            <flag name="clip_horizontal" value="8" />
+            <flag name="clip_vertical" value="128" />
+            <flag name="end" value="8388613" />
+            <flag name="fill" value="119" />
+            <flag name="fill_horizontal" value="7" />
+            <flag name="fill_vertical" value="112" />
+            <flag name="left" value="3" />
+            <flag name="right" value="5" />
+            <flag name="start" value="8388611" />
+            <flag name="top" value="48" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="DrawableTextView" parent="Root">
+        <attr name="leftIconSrc" />
+        <attr name="leftIconSize"  />
+        <attr name="leftIconPadding"  />
+        <attr name="rightIconSrc"  />
+        <attr name="rightIconSize"  />
+        <attr name="rightIconPadding"  />
+        <attr name="topIconSrc"  />
+        <attr name="topIconSize"  />
+        <attr name="topIconPadding"  />
+        <attr name="bottomIconSrc"  />
+        <attr name="bottomIconSize"  />
+        <attr name="bottomIconPadding"  />
+        <attr name="alignIconCorner"  />
+        <attr name="typeFace"/>
+        <attr name="text"  />
+        <attr name="textColor"  />
+        <attr name="textAlign"  />
+        <attr name="textSize"  />
+    </declare-styleable>
+
+    <declare-styleable name="DrawableEditText" parent="Root">
+        <attr name="backgroundSrc"  />
+        <attr name="leftIconSrc"  />
+        <attr name="leftIconSize"  />
+        <attr name="leftIconPadding" />
+        <attr name="rightIconSrc" />
+        <attr name="rightIconSize"  />
+        <attr name="rightIconPadding"  />
+        <attr name="maxLines"  />
+        <attr name="maxLength"  />
+        <attr name="text"  />
+        <attr name="textColor"  />
+        <attr name="textHint" />
+        <attr name="textHintColor"  />
+        <attr name="textGravity"  />
+        <attr name="textSize" />
+        <attr name="typeFace"/>
+        <attr name="inputType">
+            <flag name="TYPE_DATETIME" value="4" />
+            <flag name="TYPE_NUMBER" value="2" />
+            <flag name="TYPE_PHONE" value="3" />
+            <flag name="TYPE_TEXT" value="1" />
+            <flag name="TYPE_CAP_WORDS" value="8192" />
+            <flag name="TYPE_MULTI_LINE" value="131072" />
+            <flag name="TYPE_EMAIL_ADDRESS" value="32" />
+            <flag name="TYPE_PASSWORD" value="128" />
+            <flag name="TYPE_PERSON_NAME" value="96" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="ActionBar" parent="Root">
+        <attr name="leftText" format="string" />
+        <attr name="leftTextSize" format="dimension" />
+        <attr name="leftTextColor" format="color" />
+        <attr name="leftIconSrc" />
+        <attr name="leftIconSize"  />
+        <attr name="leftIconPadding"  />
+        <attr name="leftTextTypeFace" format="string" />
+
+        <attr name="centerIconSrc" />
+        <attr name="centerIconSize"  />
+        <attr name="centerIconPadding"  />
+        <attr name="centerText" format="string" />
+        <attr name="centerTextSize" format="dimension" />
+        <attr name="centerTextColor" format="color" />
+        <attr name="centerTextTypeFace" format="string" />
+
+        <attr name="rightText" format="string" />
+        <attr name="rightTextColor" format="color" />
+        <attr name="rightTextSize" format="dimension" />
+        <attr name="rightTextTypeFace" format="string" />
+        <attr name="rightIconSrc"  />
+        <attr name="rightIconSize"  />
+        <attr name="rightIconPadding"  />
+
+    </declare-styleable>
+
+    <declare-styleable name="BasicTextView"  parent="Root">
+        <attr name="typeFace"/>
+    </declare-styleable>
+
+    <declare-styleable name="BasicEditText"  parent="Root">
+        <attr name="typeFace"/>
+    </declare-styleable>
+
+    <declare-styleable name="BasicButton"  parent="Root">
+        <attr name="typeFace"/>
+    </declare-styleable>
+</resources>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#000000</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#000000</color>
+    <color name="bottom_bar_color">#161616</color>
+    <color name="white">#FFFFFF</color>
+    <color name="colorBlue">#00A2EE</color>
+    <color name="colorGreen">#00BC9E</color>
+    <color name="colorNavy">#3D69A7</color>
+    <color name="colorInputBox">#ECECE8</color>
+    <color name="iconBlue">#42C0FB</color>
+    <color name="Google">#DC4437</color>
+    <color name="bg_color">#00000000</color>
+    <color name="mis_actionbar_color">#21282C</color>
+    <color name="shadow">#555555</color>
+    <color name="title">#777777</color>
+    <color name="red_drak">#c82525</color>
+    <color name="light_green">#aad9b9</color>
+    <color name="black">#000000</color>
+    <color name="pink">#e08bd0</color>
+    <color name="grey">#cbcbcb</color>
+    <color name="grey_text">#7a788f</color>
+    <color name="grey_light">#DEDEDE</color>
+    <color name="grey_dark">#7a788f</color>
+    <color name="purple">#2c345e</color>
+    <color name="skyblue">#0077b5</color>
+    <color name="skyblue_1">#0077b4</color>
+    <color name="purple_1">#202646</color>
+    <color name="skyblue_light">#54bbe7</color>
+    <color name="skyblue_transprant">#b3041c2b</color>
+    <color name="skyblue_transprant_50">#80041c2b</color>
+    <color name="pink_transprant">#80e08bd0</color>
+    <color name="green">#09c863</color>
+
+    <color name="menu_fragment_background">#B3000000</color>
+    <color name="menu_item_background">#f2f2f2</color>
+    <color name="divider_color">#b5b5b5</color>
+
+
+    <color name="red">#F44336</color>
+    <color name="item_selected">#90FFFFFF</color>
+    <color name="drop_shadow_color">#66000000</color>
+
+
+    <color name="feed_bg">#d3d6db</color>
+    <color name="feed_item_bg">#ffffff</color>
+    <color name="feed_item_border">#c2c3c8</color>
+    <color name="link">#0a80d1</color>
+    <color name="timestamp">#a0a3a7</color>
+
+
+    <color name="dark_blue">#0C60B1</color>
+    <color name="background">#F3F2F2</color>
+    <color name="bb_backgroundColor">#F6F6F6</color>
+    <color name="dividerColor">#CFCED2</color>
+
+
+    <color name="sky">#1189fe</color>
+
+    <color name="transparent_black_1">#11000000</color>
+    <color name="transparent_black_2">#22000000</color>
+    <color name="transparent_black_3">#33000000</color>
+    <color name="transparent_black_4">#44000000</color>
+    <color name="transparent_black_5">#55000000</color>
+    <color name="transparent_black_6">#66000000</color>
+    <color name="transparent_black_7">#77000000</color>
+    <color name="transparent_black_8">#88000000</color>
+    <color name="transparent_black_9">#99000000</color>
+    <color name="transparent_black_10">#aa000000</color>
+    <color name="transparent_black_11">#bb000000</color>
+    <color name="transparent_black_12">#cc000000</color>
+    <color name="transparent_black_13">#dd000000</color>
+    <color name="transparent_black_14">#ee000000</color>
+    <color name="transparent_black_15">#ff000000</color>
+    <color name="transparent_black_16">#80000000</color>
+    <color name="transparent_white_17">#A0000000</color>
+    <color name="orange">#FFA500</color>
+    <color name="black_overlay">#66000000</color>
+
+    <!-- A transparent black -->
+    <color name="transparent_black">#aa000000</color>
+
+    <!-- selected tab text -->
+    <color name="selected_tabtext">#bb000000</color>
+
+    <!-- non selected tab text -->
+    <color name="unselected_tabtext">#77000000</color>
+    <color name="shuffle_grey">#ffdedede</color>
+    <color name="background_grey">#ffdedede</color>
+
+    <!-- Transparent -->
+    <color name="transparent">#00000000</color>
+    <color name="video_thumbnail_placeholder_color">#cccccc</color>
+    <color name="percent_50_black">#80000000</color>
+</resources>

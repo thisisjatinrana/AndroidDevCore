@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/fifty_dp"
+    android:layout_marginEnd="@dimen/fifty_dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="@dimen/five_dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+ <android.support.v7.widget.RecyclerView
+    android:id="@+id/rv_pop_up"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"/>
+
+</android.support.v7.widget.CardView>
