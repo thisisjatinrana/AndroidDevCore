@@ -1,4 +1,4 @@
-package rana.jatin.core.widget.basicRecyclerview;
+package rana.jatin.core.widget.recyclerview;
 
 
 import android.support.v7.widget.GridLayoutManager;

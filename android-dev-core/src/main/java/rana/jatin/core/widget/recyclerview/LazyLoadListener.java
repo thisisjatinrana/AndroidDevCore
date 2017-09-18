@@ -1,4 +1,4 @@
-package rana.jatin.core.widget.basicNestedScrollView;
+package rana.jatin.core.widget.recyclerview;
 
 /**
  * Created by jatin on 6/8/2017.

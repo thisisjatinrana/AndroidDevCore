@@ -1,4 +1,4 @@
-package rana.jatin.core.widget.basicRecyclerview;
+package rana.jatin.core.widget.recyclerview;
 
 import android.content.Context;
 import android.support.annotation.Nullable;

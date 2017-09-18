@@ -1,4 +1,4 @@
-package rana.jatin.core.widget.basicNestedScrollView;
+package rana.jatin.core.widget.nestedScrollView;
 
 import android.content.Context;
 import android.support.v4.widget.NestedScrollView;
