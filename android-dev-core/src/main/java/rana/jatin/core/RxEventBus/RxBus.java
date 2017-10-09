@@ -17,7 +17,7 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.PublishSubject;
 
-public final class RxBus<T> {
+public final class RxBus {
 
     private String TAG=RxBus.class.getName();
     private static RxBus rxBus;
