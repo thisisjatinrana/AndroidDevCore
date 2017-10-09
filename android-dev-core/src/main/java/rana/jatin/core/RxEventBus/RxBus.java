@@ -1,7 +1,11 @@
-package rana.jatin.core.RxEventBus;
+package rana.jatin.androiddevessentials.RxEventBus;
 
+import android.nfc.Tag;
+import android.support.annotation.IntDef;
 import android.util.Log;
+import android.util.SparseArray;
 
+import java.lang.annotation.Retention;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,12 +14,10 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.PublishSubject;
 
-/*
-* event bus implementation based on RxJava
-*/
-public final class RxBus {
+public final class RxBus<T> {
 
     private String TAG=RxBus.class.getName();
     private static RxBus rxBus;
@@ -68,9 +70,10 @@ public final class RxBus {
      * <br/><br/>
      * <b>Note:</b> Make sure to call {@link RxBus#unregister(Object)} to avoid memory leaks.
      */
-    public void subscribe(String subject, @NonNull Object lifecycle, @NonNull Consumer<Object> action) {
-        Disposable disposable = getSubject(subject).subscribe(action);
+    public <T> Disposable subscribe(String subject, @NonNull Object lifecycle,Class<T> classType, @NonNull Consumer<? super T> action){
+        Disposable disposable=getSubject(subject).ofType(classType).subscribe(action);
         getCompositeSubscription(lifecycle).add(disposable);
+        return disposable;
     }
 
     /**
@@ -92,4 +95,5 @@ public final class RxBus {
         getSubject(subject).onNext(message);
         Log.d(TAG,"publish: "+"subject: "+String.valueOf(subject)+" message:"+message);
     }
+
 }
