@@ -4,7 +4,7 @@ Android essential building blocks to speed up development process
 
 # Usage
 
-For a working implementation of this library visit https://apppoetry.wordpress.com/category/dev-channel/
+For a working implementation of this library visit https://apppoetryblog.wordpress.com/category/dev-channel/
 
 # Including In Your Project
 
