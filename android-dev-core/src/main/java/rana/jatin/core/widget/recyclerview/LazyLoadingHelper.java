@@ -27,6 +27,9 @@ public class LazyLoadingHelper extends RecyclerView.OnScrollListener {
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
+
+        lazyLoadListener.onScrolling();
+
         int visibleItemCount = recyclerView.getLayoutManager().getChildCount();
         int totalItemCount = recyclerView.getLayoutManager().getItemCount();
 
@@ -66,6 +69,7 @@ public class LazyLoadingHelper extends RecyclerView.OnScrollListener {
     @Override
     public void onScrollStateChanged(RecyclerView view, int scrollState) {
         // Don't take any action on changed
+        lazyLoadListener.onScrollingStateChanged(view, scrollState);
     }
 
     public void reset(){

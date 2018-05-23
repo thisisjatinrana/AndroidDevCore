@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 public class BasicViewPager extends ViewPager {
-    private boolean enabled=true;
+    private boolean swipeEnabled = true;
     private float mStartDragX;
     private OnSwipeListener mOnSwipeListener;
 
@@ -38,7 +38,7 @@ public class BasicViewPager extends ViewPager {
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
 
-        if (!this.enabled)
+        if (!this.swipeEnabled)
         return false;
         switch(ev.getAction() & MotionEventCompat.ACTION_MASK){
             case MotionEvent.ACTION_DOWN:
@@ -50,7 +50,7 @@ public class BasicViewPager extends ViewPager {
 
     @Override
     public boolean onTouchEvent(MotionEvent ev){
-        if (!this.enabled)
+        if (!this.swipeEnabled)
             return false;
         if(getCurrentItem()==0 || getCurrentItem()==getAdapter().getCount()-1){
             final int action = ev.getAction();
@@ -77,5 +77,14 @@ public class BasicViewPager extends ViewPager {
     public interface OnSwipeListener {
         void onSwipeFirst();
         void onSwipeLast();
+    }
+
+    public boolean isSwipeEnabled() {
+        return swipeEnabled;
+    }
+
+
+    public void setSwipeEnabled(boolean enabled) {
+        this.swipeEnabled = enabled;
     }
 }

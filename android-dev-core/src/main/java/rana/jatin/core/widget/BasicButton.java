@@ -11,7 +11,7 @@ import rana.jatin.core.R;
 
 public class BasicButton extends AppCompatButton {
 
-    private String typeFace = "GothamBook.ttf";
+    private String typeFace = "";
     public BasicButton(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context,attrs);
@@ -32,7 +32,7 @@ public class BasicButton extends AppCompatButton {
 
         for (int i = 0; i < array.getIndexCount(); ++i) {
             int attr = array.getIndex(i);
-            if (attr == R.styleable.BasicEditText_typeFace)
+            if (attr == R.styleable.BasicButton_typeFace)
                 typeFace = array.getString(attr);
         }
         array.recycle();
@@ -40,9 +40,11 @@ public class BasicButton extends AppCompatButton {
 
     private void setTypeFace() {
         if (!isInEditMode()) {
-            Typeface tf = Typeface.createFromAsset(getContext().getAssets(),
-                    "fonts/"+typeFace);
-            setTypeface(tf);
+            if (!typeFace.isEmpty()) {
+                Typeface tf = Typeface.createFromAsset(getContext().getAssets(),
+                        "fonts/" + typeFace);
+                setTypeface(tf);
+            }
         }
     }
 }

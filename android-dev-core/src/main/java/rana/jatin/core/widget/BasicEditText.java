@@ -10,7 +10,7 @@ import rana.jatin.core.R;
 
 public class BasicEditText extends AppCompatEditText {
 
-    private String typeFace = "GothamBook.ttf";
+    private String typeFace = "";
     public BasicEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context,attrs);
@@ -40,9 +40,11 @@ public class BasicEditText extends AppCompatEditText {
 
     private void setTypeFace() {
         if (!isInEditMode()) {
-            Typeface tf = Typeface.createFromAsset(getContext().getAssets(),
-                    "fonts/"+typeFace);
-            setTypeface(tf);
+            if (!typeFace.isEmpty()) {
+                Typeface tf = Typeface.createFromAsset(getContext().getAssets(),
+                        "fonts/" + typeFace);
+                setTypeface(tf);
+            }
         }
     }
 

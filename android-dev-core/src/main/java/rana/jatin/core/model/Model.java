@@ -1,40 +1,31 @@
 package rana.jatin.core.model;
 
-import android.support.annotation.Nullable;
-
 import java.io.Serializable;
-import java.util.Objects;
+
+import rana.jatin.core.base.BaseIntent;
+import rana.jatin.core.util.FragmentUtil;
 
 /**
- * Super class for all setModel {@link rana.jatin.core.activity.BaseIntent#setModel(Model)}
- * {@link rana.jatin.core.etc.FragmentHelper#setModel(Model)}
- * in project. Contains {@link #id} as unique setId for each object, {@link #type} type to compare object.
+ * Super class for all setModel {@link BaseIntent#setModel(Model)}
+ * {@link FragmentUtil#setModel(Model)}
+ * in project. Contains {@link #modelId} as unique setId for each object
  */
 public class Model implements Serializable {
-    private long id;
-    private String type;
+    private long modelId;
 
     public Model() {
     }
 
-    public Model(long id, String type) {
-        this.id = id;
-        this.type = type;
+    public Model(long modelId) {
+        this.modelId = modelId;
     }
 
-    public long getId() {
-        return id;
+    public long getModelId() {
+        return modelId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setModelId(long modelId) {
+        this.modelId = modelId;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
 }

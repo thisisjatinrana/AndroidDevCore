@@ -9,4 +9,6 @@ import android.content.DialogInterface;
 public interface AlertDialogCallback {
     void onPositiveButton(DialogInterface dialog);
     void onNegativeButton(DialogInterface dialog);
+
+    void onDismiss();
 }

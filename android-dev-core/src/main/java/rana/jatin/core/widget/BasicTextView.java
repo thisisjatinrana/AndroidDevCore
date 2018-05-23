@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 import rana.jatin.core.R;
 
 public class BasicTextView extends AppCompatTextView {
-    private String typeFace = "GothamBook.ttf";
+    private String typeFace = "";
 
     public BasicTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -40,9 +40,11 @@ public class BasicTextView extends AppCompatTextView {
 
     private void setTypeFace() {
         if (!isInEditMode()) {
-            Typeface tf = Typeface.createFromAsset(getContext().getAssets(),
-                    "fonts/"+typeFace);
-            setTypeface(tf);
+            if (!typeFace.isEmpty()) {
+                Typeface tf = Typeface.createFromAsset(getContext().getAssets(),
+                        "fonts/" + typeFace);
+                setTypeface(tf);
+            }
         }
     }
 }

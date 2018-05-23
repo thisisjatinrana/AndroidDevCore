@@ -9,4 +9,6 @@ import android.view.View;
 
 public interface DialogCallback {
     void onCallback(Dialog dialog, View v, int position);
+
+    void onDismiss();
 }

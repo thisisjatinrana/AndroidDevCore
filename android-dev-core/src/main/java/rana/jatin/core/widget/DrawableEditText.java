@@ -12,7 +12,6 @@ import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.text.InputFilter;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -33,7 +32,7 @@ import static android.content.Context.INPUT_METHOD_SERVICE;
 
 public class DrawableEditText extends LinearLayout implements View.OnClickListener {
 
-    private String typeFace="GothamBook.ttf";
+    private String typeFace = "";
     private int inputType;
     private int mLeftIcon;
     private int mLeftIconPadding;
@@ -157,9 +156,9 @@ public class DrawableEditText extends LinearLayout implements View.OnClickListen
     }
 
     private void findViews() {
-        ivLeft = (AppCompatImageView) findViewById(R.id.iv_left);
-        et = (BasicEditText) findViewById(R.id.et);
-        ivRight = (AppCompatImageView) findViewById(R.id.iv_right);
+        ivLeft = findViewById(R.id.iv_left);
+        et = findViewById(R.id.et);
+        ivRight = findViewById(R.id.iv_right);
     }
 
     private void setView() {
@@ -187,13 +186,18 @@ public class DrawableEditText extends LinearLayout implements View.OnClickListen
     }
 
     private void setEditText() {
-        Typeface tf = Typeface.createFromAsset(getContext().getAssets(),"fonts/"+ typeFace);
+
         et.setText(iconText);
         et.setTextColor(iconTextColor);
         et.setHint(iconTextHint);
         et.setHintTextColor(iconTextHintColor);
         et.setTextSize(TypedValue.COMPLEX_UNIT_PX, iconTextSize);
-        et.setTypeface(tf);
+
+        if (!typeFace.isEmpty()) {
+            Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/" + typeFace);
+            et.setTypeface(tf);
+        }
+
         et.setInputType(inputType);
 
         if (gravity.equalsIgnoreCase("right"))

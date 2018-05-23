@@ -1,4 +1,4 @@
-package rana.jatin.core.activity;
+package rana.jatin.core.base;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,32 +12,22 @@ import android.support.v7.app.AppCompatActivity;
 import java.util.List;
 import java.util.Locale;
 
-import io.reactivex.functions.Consumer;
-import rana.jatin.core.R;
-import rana.jatin.core.RxEventBus.RxBus;
 import rana.jatin.core.etc.ContextWrapper;
-import rana.jatin.core.etc.FragmentHelper;
-import rana.jatin.core.etc.HelperContainer;
-import rana.jatin.core.fragments.BaseFragment;
-import rana.jatin.core.model.Event;
+import rana.jatin.core.util.FragmentUtil;
 
 /*
-*  BaseActivity is a super-powered {@link android.support.v7.app.AppCompatActivity AppCompatActivity}
-*  to be used with {@link rana.jatin.core.activity.BaseIntent}
-*/
+ *  BaseActivity is a super-powered {@link android.support.v7.app.AppCompatActivity AppCompatActivity}
+ *  to be used with {@link rana.jatin.core.activity.BaseIntent}
+ */
 public abstract class BaseActivity extends AppCompatActivity {
 
     private String TAG = BaseActivity.class.getName();
-    private HelperContainer helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        helper = new HelperContainer(this);
-        helper.viewHelper().setSoftInputListener();
-        subscribeRefresh();
-    }
 
+    }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -85,10 +75,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /*
-    * return Extras passed to the activity using
-    * {@link BaseIntent#setModel(Serializable object) setModel}
-    * and {@link BaseIntent#setModel(Model object) setModel} methods.
-    */
+     * return Extras passed to the activity using
+     * {@link BaseIntent#setModel(Serializable object) setModel}
+     * and {@link BaseIntent#setModel(Model object) setModel} methods.
+     */
     public <T> T getModel() {
         Bundle args = getIntent().getExtras();
         if (args == null)
@@ -122,12 +112,12 @@ public abstract class BaseActivity extends AppCompatActivity {
             boolean skipStack = intent.getBooleanExtra(Extras.SKIP_STACK.name(), false);
             boolean replace = intent.getBooleanExtra(Extras.REPLACE.name(), false);
 
-            boolean added = FragmentHelper.with(this).fragment(fragment, container, replace).skipStack(skipStack).commit();
+            boolean added = FragmentUtil.with(this).fragment(fragment, container, replace).skipStack(skipStack).commit();
             needRefresh = !added;
         }
 
         if (needRefresh)
-            RxBus.getInstance().publish(Event.REFRESH.toString(), fragment.getClass().getName()); //refresh
+            onRefresh();
     }
 
     private Fragment instantiate(Class<? extends Fragment> cls) {
@@ -150,9 +140,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        RxBus.getInstance().unregister(this);
-        helper.onDestroy();
-        helper = null;
+
+
     }
 
     @Override
@@ -165,18 +154,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onResume();
     }
 
-    /*
-    * Subscribe for RxBus REFRESH event.
-    * see {@link rana.jatin.core.model.Event#REFRESH}
-    */
-    private void subscribeRefresh() {
-        RxBus.getInstance().subscribe(Event.REFRESH.name(), this, new Consumer<Object>() {
-            @Override
-            public void accept(Object o) throws Exception {
-                onRefresh(o);
-            }
-        });
-    }
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -185,8 +162,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /*
-    * Invoke abstract method {@link onBackPress(int) onBackPress}
-    */
+     * Invoke abstract method {@link onBackPress(int) onBackPress}
+     */
     @Override
     public void onBackPressed() {
         int i = getSupportFragmentManager().getBackStackEntryCount();
@@ -202,15 +179,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /*
-    * return HelperContainer. see {@link rana.jatin.core.etc.HelperContainer}
-    */
-    public HelperContainer helper() {
-        return helper;
-    }
-
-    /*
-    * invoke method {@link android.support.v4.app.Fragment#onActivityResult(int ,int ,Intent) onActivityResult} of visible fragments.
-    */
+     * invoke method {@link android.support.v4.app.Fragment#onActivityResult(int ,int ,Intent) onActivityResult} of visible fragments.
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -221,8 +191,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /*
-   * invoke method {@link android.support.v4.app.Fragment#onRequestPermissionsResult(int ,String[] ,int[]) onRequestPermissionsResult} of visible fragments.
-   */
+     * invoke method {@link android.support.v4.app.Fragment#onRequestPermissionsResult(int ,String[] ,int[]) onRequestPermissionsResult} of visible fragments.
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -234,6 +204,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public abstract void onBackPress(int fragmentCount);
 
-    public abstract void onRefresh(Object model);
+    public abstract void onRefresh();
 
 }

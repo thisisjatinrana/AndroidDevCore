@@ -2,5 +2,16 @@
     <string name="app_name">"AndroidDevCore"</string>
     <string name="message_permissions_reject">App will not work without these permissions</string>
     <string name="settings">Settings</string>
+    <string name="okay">Okay</string>
+    <string name="msg_sms_permission">Sms permission needed for sending/receiving sms. Please allow in App Settings for additional functionality</string>
+    <string name="msg_microphone_permision">Microphone permission needed for recording. Please allow in App Settings for additional functionality</string>
+    <string name="msg_strorage_permission">External Storage permission needed. Please allow in App Settings for additional functionality.</string>
+    <string name="msg_camera_permission">Camera permission needed. Please allow in App Settings for additional functionality.</string>
     <integer name="fragment_transition_time">250</integer>
+
+    <!--fonts settings-->
+    <string name="bold_text">SFCompactText_Bold.otf</string>
+    <string name="regular_text">SFCompactText_Regular.otf</string>
+    <string name="italic_text">SFCompactText_RegularItalic.otf</string>
+
 </resources>

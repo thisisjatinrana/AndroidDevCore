@@ -1,8 +1,8 @@
-package rana.jatin.core.etc;
+package rana.jatin.core.util;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.IdRes;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -11,63 +11,62 @@ import android.support.v7.app.AppCompatActivity;
 import java.io.Serializable;
 
 import rana.jatin.core.R;
-import rana.jatin.core.activity.BaseActivity;
-import rana.jatin.core.activity.Extras;
+import rana.jatin.core.base.Extras;
 import rana.jatin.core.model.Model;
 
 /**
  * This class implements more simple way to utilize FragmentManager transactions
  */
-public class FragmentHelper {
+public class FragmentUtil {
     private final FragmentManager fragmentManager;
-    private String TAG = FragmentHelper.class.getName();
+    private String TAG = FragmentUtil.class.getName();
     private Fragment fragment;
     private int container;
     private boolean replace = false, addToStack = true;
-    private int animExit=R.anim.fragment_out;
-    private int animEnter=R.anim.fragment_in;
+    private int animExit = R.anim.fragment_out;
+    private int animEnter = R.anim.fragment_in;
     private Bundle extras = null;
     private Serializable serializable;
     private Model model;
 
-    public FragmentHelper(FragmentManager fragmentManager) {
+    public FragmentUtil(FragmentManager fragmentManager) {
         this.fragmentManager = fragmentManager;
     }
 
     /**
-     * Creating new {@link FragmentHelper} for fragmentManager
-     * Usage: FragmentHelper.with(this).replace(fragment, R.setExtrasId.container).skipStack().commit();
+     * Creating new {@link FragmentUtil} for fragmentManager
+     * Usage: FragmentUtil.with(this).replace(fragment, R.setExtrasId.container).skipStack().commit();
      *
-     * @return new object of {@link FragmentHelper}
+     * @return new object of {@link FragmentUtil}
      */
-    private static FragmentHelper with(FragmentManager fragmentManager) {
-        return new FragmentHelper(fragmentManager);
+    private static FragmentUtil with(FragmentManager fragmentManager) {
+        return new FragmentUtil(fragmentManager);
     }
 
     /**
      * See {@link #with(FragmentManager)}
      *
-     * @return new object of {@link FragmentHelper}
+     * @return new object of {@link FragmentUtil}
      */
-    public static FragmentHelper with(AppCompatActivity context) {
+    public static FragmentUtil with(AppCompatActivity context) {
         return with(context.getSupportFragmentManager());
     }
 
     /**
      * See {@link #with(FragmentManager)}
      *
-     * @return new object of {@link FragmentHelper}
+     * @return new object of {@link FragmentUtil}
      */
-    public static FragmentHelper with(Fragment fragment) {
+    public static FragmentUtil with(Fragment fragment) {
         return with(fragment.getFragmentManager());
     }
 
     /**
      * See {@link #with(FragmentManager)}
      *
-     * @return new object of {@link FragmentHelper}
+     * @return new object of {@link FragmentUtil}
      */
-    public static FragmentHelper with(android.app.Fragment fragment) {
+    public static FragmentUtil with(android.app.Fragment fragment) {
         AppCompatActivity appCompatActivity = (AppCompatActivity) fragment.getActivity();
         return with(appCompatActivity);
     }
@@ -77,7 +76,7 @@ public class FragmentHelper {
      *
      * @return self
      */
-    public FragmentHelper replace(Fragment fragment, @IdRes int container) {
+    public FragmentUtil replace(Fragment fragment, @IdRes int container) {
         fragment(fragment, container, true);
 
         return this;
@@ -88,7 +87,7 @@ public class FragmentHelper {
      *
      * @return self
      */
-    public FragmentHelper add(Fragment fragment, @IdRes int container) {
+    public FragmentUtil add(Fragment fragment, @IdRes int container) {
         fragment(fragment, container, false);
 
         return this;
@@ -102,7 +101,7 @@ public class FragmentHelper {
      * @param replace   true to replace fragment, false to add fragment and hide current
      * @return self
      */
-    public FragmentHelper fragment(Fragment fragment, @IdRes int container, boolean replace) {
+    public FragmentUtil fragment(Fragment fragment, @IdRes int container, boolean replace) {
         this.fragment = fragment;
         this.container = container;
         this.replace = replace;
@@ -110,21 +109,28 @@ public class FragmentHelper {
         return this;
     }
 
+    public FragmentUtil showDialogFragment(DialogFragment fragment) {
+        fragment.show(fragmentManager, null);
+        return this;
+    }
+
     /**
      * Set flag to not add this transaction to back stack
+     *
      * @param skipStack true to not add to back stack
      * @return self
      */
-    public FragmentHelper skipStack(boolean skipStack) {
+    public FragmentUtil skipStack(boolean skipStack) {
         this.addToStack = !skipStack;
         return this;
     }
 
     /**
      * Same as {@link #skipStack(boolean)} with true parameter
+     *
      * @return self
      */
-    public FragmentHelper skipStack() {
+    public FragmentUtil skipStack() {
         skipStack(true);
         return this;
     }
@@ -133,7 +139,7 @@ public class FragmentHelper {
      * @param model class which implements serializable passed as arguments to fragment
      * @return self
      */
-    public FragmentHelper setModel(Serializable model) {
+    public FragmentUtil setModel(Serializable model) {
         this.serializable = model;
         return this;
     }
@@ -142,28 +148,30 @@ public class FragmentHelper {
      * @param model class which extends {@link Model}passed as arguments to fragment
      * @return self
      */
-    public FragmentHelper setModel(Model model) {
+    public FragmentUtil setModel(Model model) {
         this.model = model;
         return this;
     }
 
     /**
      * Additional extras to be put into fragment's arguments
+     *
      * @param extras extras to add
      * @return self
      */
-    public FragmentHelper extras(Bundle extras) {
+    public FragmentUtil extras(Bundle extras) {
         this.extras = extras;
         return this;
     }
 
     /**
      * set custom animations for fragment transactions
+     *
      * @param enter animation resource id
-     * @param exit animation resource id
+     * @param exit  animation resource id
      * @return self
      */
-    public FragmentHelper setCustomAnimations(int enter,int exit) {
+    public FragmentUtil setCustomAnimations(int enter, int exit) {
         this.animEnter = enter;
         this.animExit = exit;
         return this;
@@ -171,6 +179,7 @@ public class FragmentHelper {
 
     /**
      * Compare two fragment to avoid adding the same fragment again
+     *
      * @param left
      * @param right
      * @return true if fragment are equal
@@ -227,11 +236,11 @@ public class FragmentHelper {
     }
 
     /*
-    * remove fragment
-    * @param fragment to be removed
-    * return self
-    */
-    public FragmentHelper removeFragment(Fragment fragment) {
+     * remove fragment
+     * @param fragment to be removed
+     * return self
+     */
+    public FragmentUtil removeFragment(Fragment fragment) {
         if (fragment == null)
             return this;
         try {
@@ -246,11 +255,11 @@ public class FragmentHelper {
     }
 
     /*
-    * remove fragment from container
-    * @param containerId from fragment to be removed
-    * return self
-    */
-    public FragmentHelper removeFragFromContainer(int containerId) {
+     * remove fragment from container
+     * @param containerId from fragment to be removed
+     * return self
+     */
+    public FragmentUtil removeFragFromContainer(int containerId) {
         try {
             Fragment fragment = fragmentManager.findFragmentById(container);
             removeFragment(fragment);
@@ -261,11 +270,11 @@ public class FragmentHelper {
     }
 
     /*
-    * reload fragment
-    * @param fragment to reload
-    * return self
-    */
-    public FragmentHelper reLoadFragment(Fragment fragment) {
+     * reload fragment
+     * @param fragment to reload
+     * return self
+     */
+    public FragmentUtil reLoadFragment(Fragment fragment) {
         // Reload current fragment
         Fragment frg = null;
         frg = fragmentManager.findFragmentByTag(fragment.getClass().getName());
@@ -282,10 +291,10 @@ public class FragmentHelper {
     }
 
     /*
-    * remove all the fragments from back stack
-    * return self
-    */
-    public FragmentHelper clearBackStack() {
+     * remove all the fragments from back stack
+     * return self
+     */
+    public FragmentUtil clearBackStack() {
         if (fragmentManager.getBackStackEntryCount() > 0) {
             FragmentManager.BackStackEntry first = fragmentManager.getBackStackEntryAt(0);
             fragmentManager.popBackStack(first.getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);

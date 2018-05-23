@@ -13,19 +13,13 @@ import rana.jatin.core.widget.circularReveal.animation.ViewAnimationUtils;
  */
 
 public class CircularRevealHelper {
-    private static final CircularRevealHelper ourInstance = new CircularRevealHelper();
-
-    public static CircularRevealHelper getInstance() {
-        return ourInstance;
-    }
-
 
     private int duration;
     private Interpolator interpolator;
     private View view;
     private int x,y;
 
-    private CircularRevealHelper() {
+    public CircularRevealHelper() {
     }
 
     public Animator start() {

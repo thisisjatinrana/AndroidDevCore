@@ -9,4 +9,6 @@ import android.widget.PopupWindow;
 
 public interface PopUpCallback {
     void onCallback(PopupWindow popupWindow, View v, int position);
+
+    void onDismiss();
 }

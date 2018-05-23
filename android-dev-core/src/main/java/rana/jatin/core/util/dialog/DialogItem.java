@@ -7,26 +7,10 @@ package rana.jatin.core.util.dialog;
 public class DialogItem {
     String image;
     String name;
-    int txtColor=-1;
-    boolean divider=false;
-
-    public boolean isDivider() {
-        return this.divider;
-    }
-
-    public void setDivider(boolean divider) {
-        this.divider = divider;
-    }
-
-    public int getTxtColor() {
-        return this.txtColor;
-    }
-
-    public void setTxtColor(int txtColor) {
-        this.txtColor = txtColor;
-    }
-
-    int resId=-1;
+    int txtColor = -1;
+    boolean divider = false;
+    boolean underLine = false;
+    int resId = -1;
 
     public DialogItem(String image, String name, int resId) {
         this.image = image;
@@ -59,6 +43,29 @@ public class DialogItem {
         this.divider = divider;
     }
 
+    public DialogItem(String name, int txtColor, boolean underLine, boolean divider) {
+        this.name = name;
+        this.txtColor = txtColor;
+        this.divider = divider;
+        this.underLine = underLine;
+    }
+
+    public boolean isDivider() {
+        return this.divider;
+    }
+
+    public void setDivider(boolean divider) {
+        this.divider = divider;
+    }
+
+    public int getTxtColor() {
+        return this.txtColor;
+    }
+
+    public void setTxtColor(int txtColor) {
+        this.txtColor = txtColor;
+    }
+
     public int getResId() {
         return resId;
     }
@@ -82,5 +89,13 @@ public class DialogItem {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isUnderLine() {
+        return underLine;
+    }
+
+    public void setUnderLine(boolean underLine) {
+        this.underLine = underLine;
     }
 }

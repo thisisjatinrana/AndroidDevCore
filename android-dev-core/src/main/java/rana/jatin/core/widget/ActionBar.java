@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import rana.jatin.core.R;
+import rana.jatin.core.util.Util;
 
 /**
  * A super powered action bar which supports left,right,center text view with drawables
@@ -25,21 +26,21 @@ import rana.jatin.core.R;
 
 public class ActionBar extends RelativeLayout {
 
-    private String leftTypeFace = "GothamBook.ttf";
+    private String leftTypeFace = "";
     private int mLeftIcon;
     private int mLeftIconSize;
     private int mLeftTextSize;
     private String lefticonText;
     private ColorStateList leftTextColor = ContextCompat.getColorStateList(getContext(), R.color.black);
 
-    private String rightTypeFace = "GothamBook.ttf";
+    private String rightTypeFace = "";
     private int mRightIcon;
     private int mRightIconSize;
     private int mRightTextSize;
     private String righticonText;
     private ColorStateList rightTextColor = ContextCompat.getColorStateList(getContext(), R.color.black);
 
-    private String centerTypeFace = "GothamBook.ttf";
+    private String centerTypeFace = "";
     private int mcenterIcon;
     private int mcenterIconSize;
     private int mCenterTextSize;
@@ -129,14 +130,18 @@ public class ActionBar extends RelativeLayout {
 
     private void setView() {
 
-        Typeface tf = Typeface.createFromAsset(getContext().getAssets(),
-                "fonts/"+centerTypeFace);
         tvCenter = new TextView(getContext());
         tvCenter.setText(centericonText);
         tvCenter.setTextColor(centerTextColor);
         tvCenter.setTextSize(TypedValue.COMPLEX_UNIT_PX, mCenterTextSize);
-        tvCenter.setId(tvCenter.generateViewId());
-        tvCenter.setTypeface(tf);
+        tvCenter.setId(Util.getInstance().generateViewId());
+
+        if (!centerTypeFace.isEmpty()) {
+            Typeface tf = Typeface.createFromAsset(getContext().getAssets(),
+                    "fonts/" + centerTypeFace);
+            tvCenter.setTypeface(tf);
+        }
+
         LayoutParams p = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         p.addRule(RelativeLayout.CENTER_IN_PARENT);
@@ -155,7 +160,7 @@ public class ActionBar extends RelativeLayout {
         ivLeft = new AppCompatImageView(getContext());
         ivLeft.setImageResource(mLeftIcon);
         ivLeft.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        ivLeft.setId(ivLeft.generateViewId());
+        ivLeft.setId(Util.getInstance().generateViewId());
         p = new LayoutParams(mLeftIconSize,
                 mLeftIconSize);
         p.addRule(RelativeLayout.ALIGN_PARENT_START);
@@ -163,13 +168,18 @@ public class ActionBar extends RelativeLayout {
         ivLeft.setLayoutParams(p);
         this.addView(ivLeft);
 
-        tf = Typeface.createFromAsset(getContext().getAssets(),
-                "fonts/"+ leftTypeFace);
+
         tvLeft = new TextView(getContext());
         tvLeft.setText(lefticonText);
         tvLeft.setTextColor(leftTextColor);
         tvLeft.setTextSize(TypedValue.COMPLEX_UNIT_PX, mLeftTextSize);
-        tvLeft.setTypeface(tf);
+
+        if (!leftTypeFace.isEmpty()) {
+            Typeface tf = Typeface.createFromAsset(getContext().getAssets(),
+                    "fonts/" + leftTypeFace);
+            tvLeft.setTypeface(tf);
+        }
+
         p = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         p.addRule(RelativeLayout.END_OF, ivLeft.getId());
@@ -182,7 +192,7 @@ public class ActionBar extends RelativeLayout {
         ivRight = new AppCompatImageView(getContext());
         ivRight.setImageResource(mRightIcon);
         ivRight.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        ivRight.setId(ivRight.generateViewId());
+        ivRight.setId(Util.getInstance().generateViewId());
         p = new LayoutParams(mRightIconSize,
                 mRightIconSize);
         p.addRule(RelativeLayout.ALIGN_PARENT_END);
@@ -190,13 +200,17 @@ public class ActionBar extends RelativeLayout {
         ivRight.setLayoutParams(p);
         this.addView(ivRight);
 
-        tf = Typeface.createFromAsset(getContext().getAssets(),
-                "fonts/"+ rightTypeFace);
         tvRight = new TextView(getContext());
         tvRight.setText(righticonText);
         tvRight.setTextColor(rightTextColor);
         tvRight.setTextSize(TypedValue.COMPLEX_UNIT_PX, mRightTextSize);
-        tvRight.setTypeface(tf);
+
+        if (!rightTypeFace.isEmpty()) {
+            Typeface tf = Typeface.createFromAsset(getContext().getAssets(),
+                    "fonts/" + rightTypeFace);
+            tvRight.setTypeface(tf);
+        }
+
         p = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         p.addRule(RelativeLayout.START_OF, ivRight.getId());

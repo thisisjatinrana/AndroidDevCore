@@ -8,7 +8,7 @@
         <attr name="outerBorderColor" format="color" />
         <attr name="outerBorderWidth" format="dimension" />
         <attr name="cornerRadius" format="dimension" />
-        <!-- <attr name="type" format="enum">
+        <!-- <attr namodelTypetype" format="enum">
             <enum name="circle" value="0" />
             <enum name="roundedRect" value="1" />
         </attr> -->
@@ -268,11 +268,34 @@
         <attr name="typeFace"/>
     </declare-styleable>
 
+    <declare-styleable name="BasicEmojiTextView" parent="Root">
+        <attr name="typeFace" />
+    </declare-styleable>
+
     <declare-styleable name="BasicEditText"  parent="Root">
         <attr name="typeFace"/>
     </declare-styleable>
 
     <declare-styleable name="BasicButton"  parent="Root">
         <attr name="typeFace"/>
+    </declare-styleable>
+
+    <declare-styleable name="BasicRadioButton" parent="Root">
+        <attr name="typeFace" />
+    </declare-styleable>
+
+    <declare-styleable name="Pulsator4Droid">
+        <attr name="pulse_count" format="integer" />
+        <attr name="pulse_duration" format="integer" />
+        <attr name="pulse_color" format="color" />
+        <attr name="pulse_repeat" format="integer" />
+        <attr name="pulse_maxScale" format="float" />
+        <attr name="pulse_startFromScratch" format="boolean" />
+        <attr name="pulse_interpolator" format="enum">
+            <enum name="Linear" value="0" />
+            <enum name="Accelerate" value="1" />
+            <enum name="Decelerate" value="2" />
+            <enum name="AccelerateDecelerate" value="3" />
+        </attr>
     </declare-styleable>
 </resources>

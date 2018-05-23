@@ -8,4 +8,6 @@ import android.view.View;
 
 public interface DatePickerCallback {
     void DatePicker(View view, int year, int month, int day);
+
+    void onDismiss();
 }

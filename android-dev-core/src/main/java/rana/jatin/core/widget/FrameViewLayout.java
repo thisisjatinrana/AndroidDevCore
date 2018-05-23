@@ -39,6 +39,7 @@ public class FrameViewLayout extends RevealFrameLayout {
     private LayoutParams layoutParams;
     private TextView tvProgressTitle;
     private TextView tvProgressDesc;
+    public static long DELAY = 0;
 
     public FrameViewLayout(Context context) {
         super(context);
@@ -47,13 +48,11 @@ public class FrameViewLayout extends RevealFrameLayout {
     public FrameViewLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
-        showLoading();
     }
 
     public FrameViewLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
-        showLoading();
     }
 
     private void init(Context context, AttributeSet attrs) {
@@ -72,8 +71,9 @@ public class FrameViewLayout extends RevealFrameLayout {
             setLoadingView(progressViewLayout, margin,ta.getInt(R.styleable.FrameViewLayout_progressViewTheme,MATCH_PARENT),ta.getInt(R.styleable.FrameViewLayout_progressViewGravity,Gravity.NO_GRAVITY));
             setEmptyView(emptyViewLayout, margin,ta.getInt(R.styleable.FrameViewLayout_emptyViewTheme,MATCH_PARENT),ta.getInt(R.styleable.FrameViewLayout_emptyViewGravity,Gravity.NO_GRAVITY));
             setErrorView(errorViewLayout, margin,ta.getInt(R.styleable.FrameViewLayout_errorViewTheme,MATCH_PARENT),ta.getInt(R.styleable.FrameViewLayout_errorViewGravity,Gravity.NO_GRAVITY));
+            showContent();
         } catch (Exception e) {
-
+            e.printStackTrace();
         } finally {
             ta.recycle();
         }
@@ -90,13 +90,6 @@ public class FrameViewLayout extends RevealFrameLayout {
     }
 
     /**
-     * Hide all other states and show content Immediately
-     */
-    public void showContentImmediately() {
-        switchState(CONTENT, Collections.<Integer>emptyList());
-    }
-
-    /**
      * Hide all other states and show content
      */
     public void showContent() {
@@ -106,7 +99,7 @@ public class FrameViewLayout extends RevealFrameLayout {
             public void run() {
                 switchState(CONTENT, Collections.<Integer>emptyList());
             }
-        }, 2000);
+        }, DELAY);
     }
 
     /**
@@ -121,7 +114,7 @@ public class FrameViewLayout extends RevealFrameLayout {
             public void run() {
                 switchState(CONTENT, skipIds);
             }
-        }, 2000);
+        }, DELAY);
     }
 
     /**
@@ -159,7 +152,7 @@ public class FrameViewLayout extends RevealFrameLayout {
             public void run() {
                 switchState(EMPTY, skipIds);
             }
-        }, 2000);
+        }, DELAY);
     }
 
     public void showEmpty() {
@@ -169,7 +162,7 @@ public class FrameViewLayout extends RevealFrameLayout {
             public void run() {
                 switchState(EMPTY, Collections.<Integer>emptyList());
             }
-        }, 2000);
+        }, DELAY);
     }
 
     /**
@@ -184,7 +177,7 @@ public class FrameViewLayout extends RevealFrameLayout {
             public void run() {
                 switchState(ERROR, skipIds);
             }
-        }, 2000);
+        }, DELAY);
     }
 
 
@@ -195,7 +188,7 @@ public class FrameViewLayout extends RevealFrameLayout {
             public void run() {
                 switchState(ERROR, Collections.<Integer>emptyList());
             }
-        }, 2000);
+        }, DELAY);
     }
 
     public String getState() {
@@ -383,6 +376,7 @@ public class FrameViewLayout extends RevealFrameLayout {
             this.loadingView = inflater.inflate(id, null);
             this.loadingView.setTag(TAG_LOADING);
             this.loadingView.setClickable(true);
+            this.loadingView.setVisibility(GONE);
 
             layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT);
@@ -392,7 +386,6 @@ public class FrameViewLayout extends RevealFrameLayout {
 
             addView(this.loadingView, layoutParams);
             setLoadingViewTheme(theme,gravity);
-            showContentImmediately();
         } catch (Exception e) {
             Log.d(TAG, e.getMessage());
         }
@@ -414,6 +407,38 @@ public class FrameViewLayout extends RevealFrameLayout {
         }
     }
 
+    public FrameViewLayout setErrorViewTheme(int theme, int gravity) {
+        if (theme == MATCH_PARENT) {
+            layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT);
+            layoutParams.gravity = gravity;
+            errorView.setLayoutParams(layoutParams);
+            return this;
+        } else {
+            layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            layoutParams.gravity = gravity;
+            errorView.setLayoutParams(layoutParams);
+            return this;
+        }
+    }
+
+    public FrameViewLayout setEmptyViewTheme(int theme, int gravity) {
+        if (theme == MATCH_PARENT) {
+            layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT);
+            layoutParams.gravity = gravity;
+            emptyView.setLayoutParams(layoutParams);
+            return this;
+        } else {
+            layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            layoutParams.gravity = gravity;
+            emptyView.setLayoutParams(layoutParams);
+            return this;
+        }
+    }
+
 
     public View getEmptyView() {
         return emptyView;
@@ -424,12 +449,12 @@ public class FrameViewLayout extends RevealFrameLayout {
             this.emptyView = inflater.inflate(id, null);
             this.emptyView.setTag(TAG_EMPTY);
             this.emptyView.setClickable(true);
+            this.emptyView.setVisibility(GONE);
 
             layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT);
             addView(this.emptyView, layoutParams);
-            setLoadingViewTheme(theme,gravity);
-            showContentImmediately();
+            setEmptyViewTheme(theme, gravity);
         } catch (Exception e) {
             Log.d(TAG, e.getMessage());
         }
@@ -445,12 +470,12 @@ public class FrameViewLayout extends RevealFrameLayout {
             this.errorView = inflater.inflate(id, null);
             this.errorView.setTag(TAG_ERROR);
             this.errorView.setClickable(true);
+            this.errorView.setVisibility(GONE);
 
             layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT);
             addView(this.errorView, layoutParams);
-            setLoadingViewTheme(theme,gravity);
-            showContentImmediately();
+            setErrorViewTheme(theme, gravity);
         } catch (Exception e) {
             Log.d(TAG, e.getMessage());
         }

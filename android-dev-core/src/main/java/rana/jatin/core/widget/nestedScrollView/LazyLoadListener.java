@@ -7,4 +7,6 @@ package rana.jatin.core.widget.nestedScrollView;
 public interface LazyLoadListener {
     boolean onScrollNext(int page, int totalItemsCount);
     boolean onScrollPrev(int page, int totalItemsCount);
+
+    void onScrolling();
 }

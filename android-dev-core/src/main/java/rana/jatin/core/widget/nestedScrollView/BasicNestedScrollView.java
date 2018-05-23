@@ -31,6 +31,9 @@ public class BasicNestedScrollView extends NestedScrollView {
         this.setOnScrollChangeListener(new OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
+                lazyLoadListener.onScrolling();
+
                 if (scrollY > oldScrollY) {
                     Log.i(TAG, "Scroll DOWN");
                 }

@@ -1,32 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.AppBarLayout android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/ten_dp"
-            android:paddingBottom="@dimen/ten_dp"
+            android:paddingBottom="@dimen/dp_10"
+            android:paddingTop="@dimen/dp_10"
             android:background="@color/white">
 
             <rana.jatin.core.widget.DrawableTextView
                 android:id="@+id/left_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/ten_dp"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginStart="@dimen/dp_10"
+                app:typeFace="@string/regular_text"
                 android:layout_gravity="start|center_vertical"/>
 
             <rana.jatin.core.widget.DrawableTextView
                 android:id="@+id/center_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:typeFace="@string/regular_text"
                 android:layout_gravity="center"/>
 
             <rana.jatin.core.widget.DrawableTextView
                 android:id="@+id/right_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                app:typeFace="@string/regular_text"
                 android:layout_gravity="end|center_vertical" />
 
         </FrameLayout>

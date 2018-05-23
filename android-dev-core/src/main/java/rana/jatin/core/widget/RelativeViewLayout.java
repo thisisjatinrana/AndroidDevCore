@@ -39,7 +39,7 @@ public class RelativeViewLayout extends RevealRelativeLayout {
     private String TAG = RelativeViewLayout.class.getName();
     private String state = CONTENT;
     private RelativeLayout.LayoutParams layoutParams;
-    private static int LOADING_DELAY=2000;
+    private static int DELAY = 0;
 
     public RelativeViewLayout(Context context) {
         super(context);
@@ -48,11 +48,13 @@ public class RelativeViewLayout extends RevealRelativeLayout {
     public RelativeViewLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
+        showContent();
     }
 
     public RelativeViewLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
+        showContent();
     }
 
     private void init(Context context, AttributeSet attrs) {
@@ -72,7 +74,7 @@ public class RelativeViewLayout extends RevealRelativeLayout {
             setEmptyView(emptyViewLayout, margin,ta.getInt(R.styleable.RelativeViewLayout_emptyViewTheme,MATCH_PARENT),ta.getInt(R.styleable.RelativeViewLayout_emptyViewAlign,Gravity.NO_GRAVITY));
             setErrorView(errorViewLayout, margin,ta.getInt(R.styleable.RelativeViewLayout_errorViewTheme,MATCH_PARENT),ta.getInt(R.styleable.RelativeViewLayout_errorViewAlign,Gravity.NO_GRAVITY));
         } catch (Exception e) {
-
+            e.printStackTrace();
         } finally {
             ta.recycle();
         }
@@ -89,13 +91,6 @@ public class RelativeViewLayout extends RevealRelativeLayout {
     }
 
     /**
-     * Hide all other states and show content Immediately
-     */
-    public void showContentImmediately() {
-        switchState(CONTENT, Collections.<Integer>emptyList());
-    }
-
-    /**
      * Hide all other states and show content
      */
     public void showContent() {
@@ -105,7 +100,7 @@ public class RelativeViewLayout extends RevealRelativeLayout {
             public void run() {
                 switchState(CONTENT, Collections.<Integer>emptyList());
             }
-        }, LOADING_DELAY);
+        }, DELAY);
     }
 
     /**
@@ -120,7 +115,7 @@ public class RelativeViewLayout extends RevealRelativeLayout {
             public void run() {
                 switchState(CONTENT, skipIds);
             }
-        }, LOADING_DELAY);
+        }, DELAY);
     }
 
     /**
@@ -158,7 +153,7 @@ public class RelativeViewLayout extends RevealRelativeLayout {
             public void run() {
                 switchState(EMPTY, skipIds);
             }
-        }, LOADING_DELAY);
+        }, DELAY);
     }
 
     public void showEmpty() {
@@ -168,7 +163,7 @@ public class RelativeViewLayout extends RevealRelativeLayout {
             public void run() {
                 switchState(EMPTY, Collections.<Integer>emptyList());
             }
-        }, LOADING_DELAY);
+        }, DELAY);
     }
 
     /**
@@ -183,7 +178,7 @@ public class RelativeViewLayout extends RevealRelativeLayout {
             public void run() {
                 switchState(ERROR, skipIds);
             }
-        }, LOADING_DELAY);
+        }, DELAY);
     }
 
 
@@ -194,7 +189,7 @@ public class RelativeViewLayout extends RevealRelativeLayout {
             public void run() {
                 switchState(ERROR, Collections.<Integer>emptyList());
             }
-        }, LOADING_DELAY);
+        }, DELAY);
     }
 
 
@@ -382,6 +377,7 @@ public class RelativeViewLayout extends RevealRelativeLayout {
             this.loadingView = inflater.inflate(id, null);
             this.loadingView.setTag(TAG_LOADING);
             this.loadingView.setClickable(true);
+            this.loadingView.setVisibility(GONE);
 
             layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT);
@@ -393,19 +389,11 @@ public class RelativeViewLayout extends RevealRelativeLayout {
 
             addView(this.loadingView, layoutParams);
             setLoadingViewTheme(theme,gravity);
-            showContentImmediately();
         } catch (Exception e) {
             Log.d(TAG, e.getMessage());
         }
     }
 
-    public void setThemeMinimal() {
-
-    }
-
-    public void setThemeFull() {
-
-    }
 
     public RelativeViewLayout setLoadingViewTheme(int theme, int gravity) {
         try {
@@ -426,6 +414,44 @@ public class RelativeViewLayout extends RevealRelativeLayout {
         return this;
     }
 
+    public RelativeViewLayout setErrorViewTheme(int theme, int gravity) {
+        try {
+            if (theme == MATCH_PARENT) {
+                layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT);
+                layoutParams.addRule(gravity);
+                this.errorView.setLayoutParams(layoutParams);
+            } else {
+                layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT);
+                layoutParams.addRule(gravity);
+                this.errorView.setLayoutParams(layoutParams);
+            }
+        } catch (Exception e) {
+            Log.d(TAG, e.getMessage());
+        }
+        return this;
+    }
+
+    public RelativeViewLayout setEmptyViewTheme(int theme, int gravity) {
+        try {
+            if (theme == MATCH_PARENT) {
+                layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT);
+                layoutParams.addRule(gravity);
+                this.emptyView.setLayoutParams(layoutParams);
+            } else {
+                layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT);
+                layoutParams.addRule(gravity);
+                this.emptyView.setLayoutParams(layoutParams);
+            }
+        } catch (Exception e) {
+            Log.d(TAG, e.getMessage());
+        }
+        return this;
+    }
+
     public View getEmptyView() {
         return emptyView;
     }
@@ -435,6 +461,7 @@ public class RelativeViewLayout extends RevealRelativeLayout {
             this.emptyView = inflater.inflate(id, null);
             this.emptyView.setTag(TAG_EMPTY);
             this.emptyView.setClickable(true);
+            this.emptyView.setVisibility(GONE);
 
             layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT);
@@ -442,8 +469,7 @@ public class RelativeViewLayout extends RevealRelativeLayout {
                 layoutParams.setMargins(margin[0], margin[1], margin[2], margin[3]);
 
             addView(this.emptyView, layoutParams);
-            setLoadingViewTheme(theme,gravity);
-            showContentImmediately();
+            setEmptyViewTheme(theme, gravity);
         } catch (Exception e) {
             Log.d(TAG, e.getMessage());
         }
@@ -459,14 +485,14 @@ public class RelativeViewLayout extends RevealRelativeLayout {
             this.errorView = inflater.inflate(id, null);
             this.errorView.setTag(TAG_ERROR);
             this.errorView.setClickable(true);
+            this.errorView.setVisibility(GONE);
 
             layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT);
             if (margin != null)
                 layoutParams.setMargins(margin[0], margin[1], margin[2], margin[3]);
             addView(this.errorView, layoutParams);
-            setLoadingViewTheme(theme,gravity);
-            showContentImmediately();
+            setErrorViewTheme(theme, gravity);
         } catch (Exception e) {
             Log.d(TAG, e.getMessage());
         }
