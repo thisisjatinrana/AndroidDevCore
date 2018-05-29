@@ -21,11 +21,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.view.View;
 
+import rana.jatin.core.rxbus.RxBus;
+
 public abstract class BaseDialog extends DialogFragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        RxBus.get().register(this);
     }
 
     @Override
@@ -36,6 +39,7 @@ public abstract class BaseDialog extends DialogFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        RxBus.get().unRegister(this);
     }
 
     public void dismissDialog(String tag) {

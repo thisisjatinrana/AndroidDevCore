@@ -22,18 +22,19 @@ import rana.jatin.core.R;
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
 /**
- * Contains set of utils for working with activity or fragment interfaces, popups, toasts, snack bar etc
+ * Contains set of utils for popups, toasts, snack bar etc
  */
-public abstract class ViewUtil {
+public class ViewUtil {
 
-    private static int snackViewId;
-    private static int snackTxtColor = R.color.black;
-    private static int snackBackground = R.color.white;
-    private static int snackActionColor = R.color.red;
-    private static boolean keyboard;
+    private int snackViewId;
+    private int snackTxtColor = R.color.black;
+    private int snackBackground = R.color.white;
+    private int snackActionColor = R.color.red;
+    private boolean keyboardOpen;
     private Activity activity;
     private Fragment fragment;
     private Snackbar snackbar;
+    private KeyboardListener keyboardListener;
 
     public ViewUtil(Activity activity) {
         this.activity = activity;
@@ -53,43 +54,53 @@ public abstract class ViewUtil {
         activity.startActivity(intent);
     }
 
-    /* show soft keyboard */
+    /* show soft keyboardOpen */
     public void showSoftInput(final EditText editText) {
 
         Handler mHandler = new Handler();
         mHandler.post(
                 new Runnable() {
                     public void run() {
-                        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(INPUT_METHOD_SERVICE);
-                        inputMethodManager.toggleSoftInputFromWindow(editText.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
-                        editText.requestFocus();
+                        try {
+                            InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(INPUT_METHOD_SERVICE);
+                            inputMethodManager.toggleSoftInputFromWindow(editText.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
+                            editText.requestFocus();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
                     }
                 });
     }
 
-    /* hide soft keyboard*/
+    /* hide soft keyboardOpen*/
     public void hideSoftInput() {
 
-        if (!isSoftInputOpen())
+        if (!isKeyboardOpen())
             return;
         Handler mHandler = new Handler();
         mHandler.post(
                 new Runnable() {
                     public void run() {
-                        InputMethodManager inputManager = (InputMethodManager) activity.getSystemService(INPUT_METHOD_SERVICE);
-                        inputManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                        try {
+                            InputMethodManager inputManager = (InputMethodManager) activity.getSystemService(INPUT_METHOD_SERVICE);
+                            inputManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
     }
 
     /*
-     * return true if soft keyboard open else false if soft keyboard closed
+     * return true if soft keyboardOpen open else false if soft keyboardOpen closed
      */
-    public boolean isSoftInputOpen() {
-        return keyboard;
+    public boolean isKeyboardOpen() {
+        return keyboardOpen;
     }
 
-    public void setKeyboardListener() {
+    public void setKeyboardListener(final KeyboardListener keyboardListener) {
+        this.keyboardListener = keyboardListener;
         final View activityRootView = activity.getWindow().getDecorView().findViewById(android.R.id.content);
         activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -102,16 +113,16 @@ public abstract class ViewUtil {
                 // if keypad is shown, the r.bottom is smaller than that before.
                 int keypadHeight = screenHeight - r.bottom;
                 if (keypadHeight > screenHeight * 0.15) { // 0.15 ratio is perhaps enough to determine keypad height.
-                    // keyboard is opened
-                    keyboard = true;
-                    onKeyboardOpen();
+                    // keyboardOpen is opened
+                    keyboardOpen = true;
+                    keyboardListener.onKeyboardOpen();
                 } else {
-                    keyboard = false;
+                    keyboardOpen = false;
                     final Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            onKeyboardClosed();
+                            keyboardListener.onKeyboardClosed();
                         }
                     }, 100);
                 }
@@ -341,13 +352,13 @@ public abstract class ViewUtil {
      * set snack bar view id
      * @param id of view on which to make snack bar ( in most cases coordinator layout )
      */
-    public ViewUtil makeSnackbar(int id) {
+    public ViewUtil makeSnackBar(int id) {
         snackViewId = id;
         return this;
     }
 
     /* return snack bar*/
-    public Snackbar getSnackbar() {
+    public Snackbar getSnackBar() {
         return snackbar;
     }
 
@@ -390,7 +401,9 @@ public abstract class ViewUtil {
         return this;
     }
 
-    public abstract void onKeyboardOpen();
+    public interface KeyboardListener {
+        void onKeyboardOpen();
 
-    public abstract void onKeyboardClosed();
+        void onKeyboardClosed();
+    }
 }

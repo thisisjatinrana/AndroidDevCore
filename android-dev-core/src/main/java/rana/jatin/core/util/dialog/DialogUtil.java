@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import rana.jatin.core.R;
-import rana.jatin.core.adapter.recyclerview.RecyclerClickListener;
+import rana.jatin.core.widget.recyclerview.RecyclerViewClickListener;
 
 /**
  * Helper class to create basic dialogs and popups
@@ -36,7 +36,7 @@ public class DialogUtil {
     }
 
     /* create and show vertical list dialog*/
-    public Dialog createListDialog(final ArrayList<DialogItem> dialogItems, final DialogCallback dialogCallback) { // disply designing your popoup window
+    public Dialog showListDialog(final ArrayList<DialogData> dialogData, final DialogListener dialogListener) { // disply designing your popoup window
         final Dialog listDialog = new Dialog(context);
         listDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         listDialog.setContentView(R.layout.pop_up_window);
@@ -53,21 +53,21 @@ public class DialogUtil {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(listDialogAdapter);
-        listDialogAdapter.setData(dialogItems);
-        listDialogAdapter.OnClickListener(new RecyclerClickListener() {
+        listDialogAdapter.setData(dialogData);
+        listDialogAdapter.OnItemClickListener(new RecyclerViewClickListener() {
 
             @Override
             public void onClick(View v, View viewHolder, int position) {
                 listDialog.setOnDismissListener(null);
                 listDialog.dismiss();
-                dialogCallback.onCallback(listDialog, v, position);
+                dialogListener.onCallback(listDialog, v, position);
             }
         });
 
         listDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialogInterface) {
-                dialogCallback.onDismiss();
+                dialogListener.onDismiss();
             }
         });
 
@@ -76,7 +76,7 @@ public class DialogUtil {
     }
 
     /* create and show vertical PopupWindow*/
-    public PopupWindow createListPopUp(ArrayList<DialogItem> dialogItems, final PopUpCallback popUpCallback) { // disply designing your popoup window
+    public PopupWindow showListPopUp(ArrayList<DialogData> dialogData, final PopUpListener popUpListener) { // disply designing your popoup window
         final PopupWindow popupWindow = new PopupWindow(context); // inflet your layout or diynamic add view
         View view;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -93,28 +93,28 @@ public class DialogUtil {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(popUpWindowAdapter);
-        popUpWindowAdapter.setData(dialogItems);
-        popUpWindowAdapter.OnClickListener(new RecyclerClickListener() {
+        popUpWindowAdapter.setData(dialogData);
+        popUpWindowAdapter.OnItemClickListener(new RecyclerViewClickListener() {
 
             @Override
             public void onClick(View v, View viewHolder, int position) {
                 popupWindow.setOnDismissListener(null);
                 popupWindow.dismiss();
-                popUpCallback.onCallback(popupWindow, v, position);
+                popUpListener.onCallback(popupWindow, v, position);
             }
         });
 
         popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                popUpCallback.onDismiss();
+                popUpListener.onDismiss();
             }
         });
         //popupWindow.showAsDropDown(view,-40, 18);
         return popupWindow;
     }
 
-    public AlertDialog showAlertDialog(String title, String message, String setPositiveButton, String setNegativeButton, final AlertDialogCallback dialogCallback) {
+    public AlertDialog showAlertDialog(String title, String message, String setPositiveButton, String setNegativeButton, final AlertDialogListener dialogCallback) {
         final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 
         // set title
@@ -155,7 +155,7 @@ public class DialogUtil {
      *  @param title of the dialog
      *  @param view to set as content view of dialog
      */
-    public Dialog createDialog(String title, View view) {
+    public Dialog showDialog(String title, View view) {
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(view);
         dialog.setTitle(title);
@@ -167,7 +167,7 @@ public class DialogUtil {
      *  @param title of the dialog
      *  @param viewId to set as content view of dialog
      */
-    public Dialog createDialog(String title, @LayoutRes int view) {
+    public Dialog showDialog(String title, @LayoutRes int view) {
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(view);
         dialog.setTitle(title);

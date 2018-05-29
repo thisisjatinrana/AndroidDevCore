@@ -28,7 +28,7 @@ public class LazyLoadingHelper extends RecyclerView.OnScrollListener {
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
 
-        lazyLoadListener.onScrolling();
+        lazyLoadListener.onScrolling(recyclerView, dx, dy);
 
         int visibleItemCount = recyclerView.getLayoutManager().getChildCount();
         int totalItemCount = recyclerView.getLayoutManager().getItemCount();
@@ -62,7 +62,7 @@ public class LazyLoadingHelper extends RecyclerView.OnScrollListener {
 
     }
 
-    // Defines the process for actually isLoading more data based on page
+    // Defines the process for actually isProgress more data based on page
     // Returns true if more data is being loaded; returns false if there is no more data to load.
 
 

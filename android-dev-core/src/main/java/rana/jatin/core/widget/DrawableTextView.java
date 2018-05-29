@@ -39,7 +39,7 @@ public class DrawableTextView extends RelativeLayout {
     private int mBottomIcon;
     private int mBottomIconPadding;
     private int mBottomIconSize;
-    private boolean alignEnd;
+    private boolean iconFitXY;
     private String textAlign = "center";
     private TextView textView;
 
@@ -57,6 +57,23 @@ public class DrawableTextView extends RelativeLayout {
         super(context, attrs, defStyleAttr);
         init(context, attrs);
     }
+
+    private AppCompatImageView rightImageView;
+
+    private void setView() {
+
+        if (textAlign.equalsIgnoreCase("left")) {
+            setGravityLeft();
+        } else if (textAlign.equalsIgnoreCase("right")) {
+            setGravityRight();
+        } else {
+            setGravityCenter();
+        }
+    }
+
+    private AppCompatImageView leftImageView;
+    private AppCompatImageView bottomImageView;
+    private AppCompatImageView topImageView;
 
     private void init(Context context, AttributeSet attrs) {
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.DrawableTextView);
@@ -100,8 +117,8 @@ public class DrawableTextView extends RelativeLayout {
             else if (attr == R.styleable.DrawableTextView_textSize)
                 iconTextSize = array.getDimensionPixelSize(attr, 0);
 
-            else if (attr == R.styleable.DrawableTextView_alignIconCorner)
-                alignEnd = array.getBoolean(attr, false);
+            else if (attr == R.styleable.DrawableTextView_iconFitXY)
+                iconFitXY = array.getBoolean(attr, false);
 
             else if (attr == R.styleable.DrawableTextView_textAlign)
                 textAlign = array.getString(attr);
@@ -113,33 +130,18 @@ public class DrawableTextView extends RelativeLayout {
         setView();
     }
 
-    private void setView() {
-
-        if (textAlign.equalsIgnoreCase("left")) {
-            setGravityLeft();
-        } else if (textAlign.equalsIgnoreCase("right")) {
-            setGravityRight();
-        } else {
-            setGravityCenter();
-        }
-    }
-
-    private AppCompatImageView rightView;
-    private AppCompatImageView leftView;
-    private AppCompatImageView bottomView;
-    private AppCompatImageView topView;
     private void setGravityRight() {
         RelativeLayout.LayoutParams p;
-        rightView = new AppCompatImageView(getContext());
-        rightView.setImageResource(mRightIcon);
-        rightView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        rightView.setId(Util.getInstance().generateViewId());
+        rightImageView = new AppCompatImageView(getContext());
+        rightImageView.setImageResource(mRightIcon);
+        rightImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        rightImageView.setId(Util.getInstance().generateViewId());
         p = new RelativeLayout.LayoutParams(mRightIconSize,
                 mRightIconSize);
         p.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         p.addRule(RelativeLayout.CENTER_VERTICAL);
-        rightView.setLayoutParams(p);
-        this.addView(rightView);
+        rightImageView.setLayoutParams(p);
+        this.addView(rightImageView);
 
         textView = new TextView(getContext());
         textView.setText(iconText);
@@ -154,69 +156,69 @@ public class DrawableTextView extends RelativeLayout {
 
         p = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        p.addRule(RelativeLayout.LEFT_OF, rightView.getId());
+        p.addRule(RelativeLayout.LEFT_OF, rightImageView.getId());
         p.addRule(RelativeLayout.CENTER_VERTICAL);
         p.setMargins(mRightIconPadding, 0, 0, 0);
         textView.setLayoutParams(p);
         this.addView(textView);
 
 
-        leftView = new AppCompatImageView(getContext());
-        leftView.setImageResource(mLeftIcon);
-        leftView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        leftImageView = new AppCompatImageView(getContext());
+        leftImageView.setImageResource(mLeftIcon);
+        leftImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         p = new RelativeLayout.LayoutParams(mLeftIconSize,
                 mLeftIconSize);
-        if (alignEnd)
+        if (iconFitXY)
             p.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         else
             p.addRule(RelativeLayout.LEFT_OF, textView.getId());
         p.setMargins(0, 0, mLeftIconPadding, 0);
         p.addRule(RelativeLayout.CENTER_VERTICAL);
-        leftView.setLayoutParams(p);
-        this.addView(leftView);
+        leftImageView.setLayoutParams(p);
+        this.addView(leftImageView);
 
-        topView = new AppCompatImageView(getContext());
-        topView.setImageResource(mTopIcon);
-        topView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        topImageView = new AppCompatImageView(getContext());
+        topImageView.setImageResource(mTopIcon);
+        topImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         p = new RelativeLayout.LayoutParams(mTopIconSize,
                 mTopIconSize);
-        if (alignEnd)
+        if (iconFitXY)
             p.addRule(RelativeLayout.ALIGN_PARENT_TOP);
         else
             p.addRule(RelativeLayout.ABOVE, textView.getId());
         p.setMargins(0, mTopIconPadding, 0, 0);
         p.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        topView.setLayoutParams(p);
-        this.addView(topView);
+        topImageView.setLayoutParams(p);
+        this.addView(topImageView);
 
 
-        bottomView = new AppCompatImageView(getContext());
-        bottomView.setImageResource(mBottomIcon);
-        bottomView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        bottomImageView = new AppCompatImageView(getContext());
+        bottomImageView.setImageResource(mBottomIcon);
+        bottomImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         p = new RelativeLayout.LayoutParams(mBottomIconSize,
                 mBottomIconSize);
-        if (alignEnd)
+        if (iconFitXY)
             p.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         else
             p.addRule(RelativeLayout.BELOW, textView.getId());
         p.setMargins(0, 0, 0, mBottomIconPadding);
         p.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        bottomView.setLayoutParams(p);
-        this.addView(bottomView);
+        bottomImageView.setLayoutParams(p);
+        this.addView(bottomImageView);
     }
 
     private void setGravityLeft() {
         RelativeLayout.LayoutParams p;
-        leftView = new AppCompatImageView(getContext());
-        leftView.setImageResource(mLeftIcon);
-        leftView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        leftView.setId(Util.getInstance().generateViewId());
+        leftImageView = new AppCompatImageView(getContext());
+        leftImageView.setImageResource(mLeftIcon);
+        leftImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        leftImageView.setId(Util.getInstance().generateViewId());
         p = new RelativeLayout.LayoutParams(mLeftIconSize,
                 mLeftIconSize);
         p.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         p.addRule(RelativeLayout.CENTER_VERTICAL);
-        leftView.setLayoutParams(p);
-        this.addView(leftView);
+        leftImageView.setLayoutParams(p);
+        this.addView(leftImageView);
 
         textView = new TextView(getContext());
         textView.setText(iconText);
@@ -231,55 +233,55 @@ public class DrawableTextView extends RelativeLayout {
 
         p = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        p.addRule(RelativeLayout.RIGHT_OF, leftView.getId());
+        p.addRule(RelativeLayout.RIGHT_OF, leftImageView.getId());
         p.addRule(RelativeLayout.CENTER_VERTICAL);
         p.setMargins(mLeftIconPadding, 0, 0, 0);
         textView.setLayoutParams(p);
         this.addView(textView);
 
 
-        rightView = new AppCompatImageView(getContext());
-        rightView.setImageResource(mRightIcon);
-        rightView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        rightImageView = new AppCompatImageView(getContext());
+        rightImageView.setImageResource(mRightIcon);
+        rightImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         p = new RelativeLayout.LayoutParams(mRightIconSize,
                 mRightIconSize);
-        if (alignEnd)
+        if (iconFitXY)
             p.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         else
             p.addRule(RelativeLayout.RIGHT_OF, textView.getId());
         p.setMargins(mRightIconPadding, 0, 0, 0);
         p.addRule(RelativeLayout.CENTER_VERTICAL);
-        rightView.setLayoutParams(p);
-        this.addView(rightView);
+        rightImageView.setLayoutParams(p);
+        this.addView(rightImageView);
 
-        topView = new AppCompatImageView(getContext());
-        topView.setImageResource(mTopIcon);
-        topView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        topImageView = new AppCompatImageView(getContext());
+        topImageView.setImageResource(mTopIcon);
+        topImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         p = new RelativeLayout.LayoutParams(mTopIconSize,
                 mTopIconSize);
-        if (alignEnd)
+        if (iconFitXY)
             p.addRule(RelativeLayout.ALIGN_PARENT_TOP);
         else
             p.addRule(RelativeLayout.ABOVE, textView.getId());
         p.setMargins(0, mTopIconPadding, 0, 0);
         p.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        topView.setLayoutParams(p);
-        this.addView(topView);
+        topImageView.setLayoutParams(p);
+        this.addView(topImageView);
 
 
-        bottomView = new AppCompatImageView(getContext());
-        bottomView.setImageResource(mBottomIcon);
-        bottomView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        bottomImageView = new AppCompatImageView(getContext());
+        bottomImageView.setImageResource(mBottomIcon);
+        bottomImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         p = new RelativeLayout.LayoutParams(mBottomIconSize,
                 mBottomIconSize);
-        if (alignEnd)
+        if (iconFitXY)
             p.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         else
             p.addRule(RelativeLayout.BELOW, textView.getId());
         p.setMargins(0, 0, 0, mBottomIconPadding);
         p.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        bottomView.setLayoutParams(p);
-        this.addView(bottomView);
+        bottomImageView.setLayoutParams(p);
+        this.addView(bottomImageView);
     }
 
     private void setGravityCenter() {
@@ -301,115 +303,109 @@ public class DrawableTextView extends RelativeLayout {
         textView.setLayoutParams(p);
         this.addView(textView);
 
-        leftView = new AppCompatImageView(getContext());
-        leftView.setImageResource(mLeftIcon);
-        leftView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        leftImageView = new AppCompatImageView(getContext());
+        leftImageView.setImageResource(mLeftIcon);
+        leftImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         p = new RelativeLayout.LayoutParams(mLeftIconSize,
                 mLeftIconSize);
-        if (alignEnd)
+        if (iconFitXY)
             p.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
         else
             p.addRule(RelativeLayout.LEFT_OF, textView.getId());
         p.setMargins(0, 0, mLeftIconPadding, 0);
         p.addRule(RelativeLayout.CENTER_VERTICAL);
-        leftView.setLayoutParams(p);
-        this.addView(leftView);
+        leftImageView.setLayoutParams(p);
+        this.addView(leftImageView);
 
-        rightView = new AppCompatImageView(getContext());
-        rightView.setImageResource(mRightIcon);
-        rightView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        rightImageView = new AppCompatImageView(getContext());
+        rightImageView.setImageResource(mRightIcon);
+        rightImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         p = new RelativeLayout.LayoutParams(mRightIconSize,
                 mRightIconSize);
-        if (alignEnd)
+        if (iconFitXY)
             p.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
         else
             p.addRule(RelativeLayout.RIGHT_OF, textView.getId());
         p.setMargins(mRightIconPadding, 0, 0, 0);
         p.addRule(RelativeLayout.CENTER_VERTICAL);
-        rightView.setLayoutParams(p);
-        this.addView(rightView);
+        rightImageView.setLayoutParams(p);
+        this.addView(rightImageView);
 
-        topView = new AppCompatImageView(getContext());
-        topView.setImageResource(mTopIcon);
-        topView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        topImageView = new AppCompatImageView(getContext());
+        topImageView.setImageResource(mTopIcon);
+        topImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         p = new RelativeLayout.LayoutParams(mTopIconSize,
                 mTopIconSize);
-        if (alignEnd)
+        if (iconFitXY)
             p.addRule(RelativeLayout.ALIGN_PARENT_TOP);
         else
             p.addRule(RelativeLayout.ABOVE, textView.getId());
         p.setMargins(0, mTopIconPadding, 0, 0);
         p.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        topView.setLayoutParams(p);
-        this.addView(topView);
+        topImageView.setLayoutParams(p);
+        this.addView(topImageView);
 
 
-        bottomView = new AppCompatImageView(getContext());
-        bottomView.setImageResource(mBottomIcon);
-        bottomView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        bottomImageView = new AppCompatImageView(getContext());
+        bottomImageView.setImageResource(mBottomIcon);
+        bottomImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         p = new RelativeLayout.LayoutParams(mBottomIconSize,
                 mBottomIconSize);
-        if (alignEnd)
+        if (iconFitXY)
             p.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         else
             p.addRule(RelativeLayout.BELOW, textView.getId());
         p.setMargins(0, 0, 0, mBottomIconPadding);
         p.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        bottomView.setLayoutParams(p);
-        this.addView(bottomView);
+        bottomImageView.setLayoutParams(p);
+        this.addView(bottomImageView);
     }
 
     public void setText(String text){
         textView.setText(text);
     }
 
-    public AppCompatImageView getRightView() {
-        return rightView;
+    public AppCompatImageView getRightImageView() {
+        return rightImageView;
     }
 
-    public void setRightView(AppCompatImageView rightView) {
-        this.rightView = rightView;
+    public AppCompatImageView getLeftImageView() {
+        return leftImageView;
     }
 
-    public AppCompatImageView getLeftView() {
-        return leftView;
+    public AppCompatImageView getBottomImageView() {
+        return bottomImageView;
     }
 
-    public void setLeftView(AppCompatImageView leftView) {
-        this.leftView = leftView;
-    }
-
-    public AppCompatImageView getBottomView() {
-        return bottomView;
-    }
-
-    public void setBottomView(AppCompatImageView bottomView) {
-        this.bottomView = bottomView;
-    }
-
-    public AppCompatImageView getTopView() {
-        return topView;
-    }
-
-    public void setTopView(AppCompatImageView topView) {
-        this.topView = topView;
+    public AppCompatImageView getTopImageView() {
+        return topImageView;
     }
 
     public void setIconPadding(@DimenRes int paddingValue) {
         int padding = getContext().getResources().getDimensionPixelSize(paddingValue);
-        this.topView.setPadding(padding, padding, padding, padding);
-        this.bottomView.setPadding(padding, padding, padding, padding);
-        this.leftView.setPadding(padding, padding, padding, padding);
-        this.rightView.setPadding(padding, padding, padding, padding);
-    }
-
-    public void setRightIconPadding(@DimenRes int paddingValue) {
-        int padding = getContext().getResources().getDimensionPixelSize(paddingValue);
-        this.rightView.setPadding(padding, padding, padding, padding);
+        this.topImageView.setPadding(padding, padding, padding, padding);
+        this.bottomImageView.setPadding(padding, padding, padding, padding);
+        this.leftImageView.setPadding(padding, padding, padding, padding);
+        this.rightImageView.setPadding(padding, padding, padding, padding);
     }
 
     public void setLeftIconPadding(@DimenRes int paddingValue) {
         int padding = getContext().getResources().getDimensionPixelSize(paddingValue);
-        this.leftView.setPadding(padding, padding, padding, padding);
+        this.leftImageView.setPadding(padding, padding, padding, padding);
+    }
+
+    public void setRightIconPadding(@DimenRes int paddingValue) {
+        int padding = getContext().getResources().getDimensionPixelSize(paddingValue);
+        this.rightImageView.setPadding(padding, padding, padding, padding);
+    }
+
+    public void setTopIconPadding(@DimenRes int paddingValue) {
+        int padding = getContext().getResources().getDimensionPixelSize(paddingValue);
+        this.topImageView.setPadding(padding, padding, padding, padding);
+    }
+
+    public void setBottomIconPadding(@DimenRes int paddingValue) {
+        int padding = getContext().getResources().getDimensionPixelSize(paddingValue);
+        this.bottomImageView.setPadding(padding, padding, padding, padding);
     }
 }

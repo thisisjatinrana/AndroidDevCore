@@ -1,14 +1,8 @@
 package rana.jatin.core.util;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Build;
-import android.support.annotation.ColorRes;
-import android.support.v4.content.ContextCompat;
 import android.text.InputFilter;
 import android.text.Spanned;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.View;
 
 import com.google.gson.Gson;
@@ -65,27 +59,6 @@ public class Util {
             return gson.fromJson(json, type);
         }
         return null;
-    }
-
-    /* return height and width of device*/
-    public int[] getHeightWidth(Activity context) {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        context.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int height = displayMetrics.heightPixels;
-        int width = displayMetrics.widthPixels;
-        int[] xy = {height, width};
-        return xy;
-    }
-
-    /* convert DP to PX */
-    public float dipToPixels(Context context, float dipValue) {
-        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, metrics);
-    }
-
-    /* return color using ContextCompat*/
-    public int getColor(Context context, @ColorRes int color) {
-        return ContextCompat.getColor(context, color);
     }
 
     /* create filter for max length to set on EditText of other views*/

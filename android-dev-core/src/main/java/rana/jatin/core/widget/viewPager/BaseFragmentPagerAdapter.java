@@ -1,4 +1,4 @@
-package rana.jatin.core.adapter.viewPager;
+package rana.jatin.core.widget.viewPager;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;

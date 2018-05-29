@@ -7,7 +7,7 @@ import android.view.View;
  * Created by jatin on 6/29/2017.
  */
 
-public interface DialogCallback {
+public interface DialogListener {
     void onCallback(Dialog dialog, View v, int position);
 
     void onDismiss();

@@ -50,9 +50,9 @@ public class DrawableEditText extends LinearLayout implements View.OnClickListen
     private int maxLength = 0;
     private Drawable background;
     private int backgroundColor = -1;
-    private AppCompatImageView ivLeft;
-    private BasicEditText et;
-    private AppCompatImageView ivRight;
+    private AppCompatImageView leftImageView;
+    private BaseEditText editText;
+    private AppCompatImageView rightImageView;
 
     public DrawableEditText(Context context) {
         super(context);
@@ -156,9 +156,9 @@ public class DrawableEditText extends LinearLayout implements View.OnClickListen
     }
 
     private void findViews() {
-        ivLeft = findViewById(R.id.iv_left);
-        et = findViewById(R.id.et);
-        ivRight = findViewById(R.id.iv_right);
+        leftImageView = findViewById(R.id.iv_left);
+        editText = findViewById(R.id.et);
+        rightImageView = findViewById(R.id.iv_right);
     }
 
     private void setView() {
@@ -166,7 +166,7 @@ public class DrawableEditText extends LinearLayout implements View.OnClickListen
         this.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                requestInputFocus(et);
+                requestInputFocus(editText);
             }
         });
     }
@@ -187,81 +187,89 @@ public class DrawableEditText extends LinearLayout implements View.OnClickListen
 
     private void setEditText() {
 
-        et.setText(iconText);
-        et.setTextColor(iconTextColor);
-        et.setHint(iconTextHint);
-        et.setHintTextColor(iconTextHintColor);
-        et.setTextSize(TypedValue.COMPLEX_UNIT_PX, iconTextSize);
+        editText.setText(iconText);
+        editText.setTextColor(iconTextColor);
+        editText.setHint(iconTextHint);
+        editText.setHintTextColor(iconTextHintColor);
+        editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, iconTextSize);
 
         if (!typeFace.isEmpty()) {
             Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/" + typeFace);
-            et.setTypeface(tf);
+            editText.setTypeface(tf);
         }
 
-        et.setInputType(inputType);
+        editText.setInputType(inputType);
 
         if (gravity.equalsIgnoreCase("right"))
-            et.setGravity(Gravity.END);
+            editText.setGravity(Gravity.END);
         else if (gravity.equalsIgnoreCase("left"))
-            et.setGravity(Gravity.START);
+            editText.setGravity(Gravity.START);
         else
-            et.setGravity(Gravity.CENTER);
+            editText.setGravity(Gravity.CENTER);
 
         if (maxLines > 0) {
-            et.setMaxLines(maxLines);
-            et.setEllipsize(TextUtils.TruncateAt.END);
+            editText.setMaxLines(maxLines);
+            editText.setEllipsize(TextUtils.TruncateAt.END);
         }
         if (maxLength > 0) {
-            et.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)});
+            editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)});
         }
         if (background != null)
-            et.setBackground(background);
+            editText.setBackground(background);
         if (backgroundColor != -1)
-            et.setBackgroundColor(backgroundColor);
+            editText.setBackgroundColor(backgroundColor);
 
         LinearLayout.LayoutParams p = new LayoutParams(mLeftIconSize,
                 mLeftIconSize);
         p.setMargins(0, 0, mLeftIconPadding, 0);
-        ivLeft.setImageResource(mLeftIcon);
-        ivLeft.setLayoutParams(p);
+        leftImageView.setImageResource(mLeftIcon);
+        leftImageView.setLayoutParams(p);
 
         p = new LayoutParams(mRightIconSize,
                 mRightIconSize);
         p.setMargins(mRightIconPadding, 0, 0, 0);
-        ivRight.setImageResource(mRightIcon);
-        ivRight.setLayoutParams(p);
+        rightImageView.setImageResource(mRightIcon);
+        rightImageView.setLayoutParams(p);
     }
 
     public String getText() {
-        if (et != null)
-            return et.getText().toString();
+        if (editText != null)
+            return editText.getText().toString();
         else
             return "";
     }
 
     public void setText(String text) {
-        if (et != null)
-            et.setText(text);
+        if (editText != null)
+            editText.setText(text);
     }
 
     public void setFilter(InputFilter[] inputFilters) {
-        et.setFilters(inputFilters);
+        editText.setFilters(inputFilters);
     }
 
     public EditText getEditText() {
-        return et;
+        return editText;
     }
 
-    public void setEditText(BasicEditText editText) {
-        this.et = editText;
+    public void setEditText(BaseEditText editText) {
+        this.editText = editText;
     }
 
-    public void setLeftOnClick(OnClickListener onClick) {
-        ivLeft.setOnClickListener(onClick);
+    public void setLeftIconClickListener(OnClickListener onClick) {
+        leftImageView.setOnClickListener(onClick);
     }
 
-    public void setRightOnClick(OnClickListener onClick) {
-        ivRight.setOnClickListener(onClick);
+    public void setRightIconClickListener(OnClickListener onClick) {
+        rightImageView.setOnClickListener(onClick);
+    }
+
+    public AppCompatImageView getLeftImageView() {
+        return leftImageView;
+    }
+
+    public AppCompatImageView getRightImageView() {
+        return rightImageView;
     }
 
     @Override

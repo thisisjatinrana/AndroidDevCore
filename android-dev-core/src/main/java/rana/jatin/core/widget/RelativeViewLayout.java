@@ -20,26 +20,26 @@ import rana.jatin.core.widget.circularReveal.widget.RevealRelativeLayout;
 
 public class RelativeViewLayout extends RevealRelativeLayout {
 
-    public static final  int MATCH_PARENT = 2;
-    public static final  int WRAP_CONTENT = 1;
-    private static final String TAG_LOADING = "ProgressView.TAG_LOADING";
-    private static final String TAG_EMPTY = "ProgressView.TAG_EMPTY";
-    private static final String TAG_ERROR = "ProgressView.TAG_ERROR";
-    final String CONTENT = "type_content";
-    final String LOADING = "type_loading";
-    final String EMPTY = "type_empty";
-    final String ERROR = "type_error";
-    LayoutInflater inflater;
-    List<View> contentViews = new ArrayList<>();
-    View loadingView;
-    View emptyView;
-    View errorView;
+    public final int MATCH_PARENT = 2;
+    public final int WRAP_CONTENT = 1;
+    private final String TAG_PROGRESS = "ProgressView.TAG_PROGRESS";
+    private final String TAG_EMPTY = "ProgressView.TAG_EMPTY";
+    private final String TAG_ERROR = "ProgressView.TAG_ERROR";
+    private final String CONTENT = "type_content";
+    private final String PROGRESS = "type_progress";
+    private final String EMPTY = "type_empty";
+    private final String ERROR = "type_error";
+    private LayoutInflater inflater;
+    private List<View> contentViews = new ArrayList<>();
+    private View progressView;
+    private View emptyView;
+    private View errorView;
     private TextView tvProgressTitle;
     private TextView tvProgressDesc;
     private String TAG = RelativeViewLayout.class.getName();
     private String state = CONTENT;
     private RelativeLayout.LayoutParams layoutParams;
-    private static int DELAY = 0;
+    private int delay = 0;
 
     public RelativeViewLayout(Context context) {
         super(context);
@@ -70,9 +70,9 @@ public class RelativeViewLayout extends RevealRelativeLayout {
             int marginLeft = ta.getDimensionPixelSize(R.styleable.RelativeViewLayout_marginLeft, 0);
             int marginRight = ta.getDimensionPixelSize(R.styleable.RelativeViewLayout_marginRight, 0);
             int[] margin = {marginLeft, marginTop, marginRight, marginBottom};
-            setLoadingView(progressViewLayout, margin,ta.getInt(R.styleable.RelativeViewLayout_progressViewTheme,MATCH_PARENT),ta.getInt(R.styleable.RelativeViewLayout_progressViewAlign,Gravity.NO_GRAVITY));
-            setEmptyView(emptyViewLayout, margin,ta.getInt(R.styleable.RelativeViewLayout_emptyViewTheme,MATCH_PARENT),ta.getInt(R.styleable.RelativeViewLayout_emptyViewAlign,Gravity.NO_GRAVITY));
-            setErrorView(errorViewLayout, margin,ta.getInt(R.styleable.RelativeViewLayout_errorViewTheme,MATCH_PARENT),ta.getInt(R.styleable.RelativeViewLayout_errorViewAlign,Gravity.NO_GRAVITY));
+            setProgressView(progressViewLayout, margin, ta.getInt(R.styleable.RelativeViewLayout_progressViewSize, MATCH_PARENT), ta.getInt(R.styleable.RelativeViewLayout_progressViewAlign, Gravity.NO_GRAVITY));
+            setEmptyView(emptyViewLayout, margin, ta.getInt(R.styleable.RelativeViewLayout_emptyViewSize, MATCH_PARENT), ta.getInt(R.styleable.RelativeViewLayout_emptyViewAlign, Gravity.NO_GRAVITY));
+            setErrorView(errorViewLayout, margin, ta.getInt(R.styleable.RelativeViewLayout_errorViewSize, MATCH_PARENT), ta.getInt(R.styleable.RelativeViewLayout_errorViewAlign, Gravity.NO_GRAVITY));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -84,7 +84,7 @@ public class RelativeViewLayout extends RevealRelativeLayout {
     @Override
     public void addView(View child, int index, ViewGroup.LayoutParams params) {
         super.addView(child, index, params);
-        if (child.getTag() == null || (!child.getTag().equals(TAG_LOADING)
+        if (child.getTag() == null || (!child.getTag().equals(TAG_PROGRESS)
                 && !child.getTag().equals(TAG_EMPTY) && !child.getTag().equals(TAG_ERROR))) {
             contentViews.add(child);
         }
@@ -100,7 +100,7 @@ public class RelativeViewLayout extends RevealRelativeLayout {
             public void run() {
                 switchState(CONTENT, Collections.<Integer>emptyList());
             }
-        }, DELAY);
+        }, delay);
     }
 
     /**
@@ -115,7 +115,7 @@ public class RelativeViewLayout extends RevealRelativeLayout {
             public void run() {
                 switchState(CONTENT, skipIds);
             }
-        }, DELAY);
+        }, delay);
     }
 
     /**
@@ -123,22 +123,22 @@ public class RelativeViewLayout extends RevealRelativeLayout {
      *
      * @param skipIds Ids of views to not hide
      */
-    public void showLoading(List<Integer> skipIds) {
-        switchState(LOADING, skipIds);
+    public void showProgress(List<Integer> skipIds) {
+        switchState(PROGRESS, skipIds);
     }
 
     /**
      * Hide content and show the progress bar
      */
-    public void showLoading() {
-        switchState(LOADING, Collections.<Integer>emptyList());
+    public void showProgress() {
+        switchState(PROGRESS, Collections.<Integer>emptyList());
     }
 
     /**
      * Hide content and show the progress bar with progress text
      */
-    public void showLoading(String progress, String des) {
-        switchState(LOADING, progress, des, Collections.<Integer>emptyList());
+    public void showProgress(String progress, String des) {
+        switchState(PROGRESS, progress, des, Collections.<Integer>emptyList());
     }
 
     /**
@@ -153,7 +153,7 @@ public class RelativeViewLayout extends RevealRelativeLayout {
             public void run() {
                 switchState(EMPTY, skipIds);
             }
-        }, DELAY);
+        }, delay);
     }
 
     public void showEmpty() {
@@ -163,7 +163,7 @@ public class RelativeViewLayout extends RevealRelativeLayout {
             public void run() {
                 switchState(EMPTY, Collections.<Integer>emptyList());
             }
-        }, DELAY);
+        }, delay);
     }
 
     /**
@@ -178,7 +178,7 @@ public class RelativeViewLayout extends RevealRelativeLayout {
             public void run() {
                 switchState(ERROR, skipIds);
             }
-        }, DELAY);
+        }, delay);
     }
 
 
@@ -189,7 +189,7 @@ public class RelativeViewLayout extends RevealRelativeLayout {
             public void run() {
                 switchState(ERROR, Collections.<Integer>emptyList());
             }
-        }, DELAY);
+        }, delay);
     }
 
 
@@ -201,8 +201,8 @@ public class RelativeViewLayout extends RevealRelativeLayout {
         return state.equals(CONTENT);
     }
 
-    public boolean isLoading() {
-        return state.equals(LOADING);
+    public boolean isProgress() {
+        return state.equals(PROGRESS);
     }
 
     public boolean isEmpty() {
@@ -219,28 +219,28 @@ public class RelativeViewLayout extends RevealRelativeLayout {
         switch (state) {
             case CONTENT:
                 //Hide all state views to display content
-                hideLoadingView();
+                hideProgressView();
                 hideEmptyView();
                 hideErrorView();
 
                 // setContentVisibility(true, skipIds);
                 break;
-            case LOADING:
+            case PROGRESS:
                 hideEmptyView();
                 hideErrorView();
 
-                showLoadingView();
+                showProgressView();
                 // setContentVisibility(false, skipIds);
                 break;
             case EMPTY:
-                hideLoadingView();
+                hideProgressView();
                 hideErrorView();
 
                 showEmptyView();
                 //   setContentVisibility(false, skipIds);
                 break;
             case ERROR:
-                hideLoadingView();
+                hideProgressView();
                 hideEmptyView();
 
                 showErrorView();
@@ -255,28 +255,28 @@ public class RelativeViewLayout extends RevealRelativeLayout {
         switch (state) {
             case CONTENT:
                 //Hide all state views to display content
-                hideLoadingView();
+                hideProgressView();
                 hideEmptyView();
                 hideErrorView();
 
                 // setContentVisibility(true, skipIds);
                 break;
-            case LOADING:
+            case PROGRESS:
                 hideEmptyView();
                 hideErrorView();
 
-                showLoadingView(messageTitle, messageDesc);
+                showProgressView(messageTitle, messageDesc);
                 // setContentVisibility(false, skipIds);
                 break;
             case EMPTY:
-                hideLoadingView();
+                hideProgressView();
                 hideErrorView();
 
                 showEmptyView();
                 //   setContentVisibility(false, skipIds);
                 break;
             case ERROR:
-                hideLoadingView();
+                hideProgressView();
                 hideEmptyView();
 
                 showErrorView();
@@ -285,25 +285,25 @@ public class RelativeViewLayout extends RevealRelativeLayout {
         }
     }
 
-    private void showLoadingView() {
-        if (loadingView != null) {
-            loadingView.setVisibility(VISIBLE);
-            loadingView.bringToFront();
-            loadingView.invalidate();
+    private void showProgressView() {
+        if (progressView != null) {
+            progressView.setVisibility(VISIBLE);
+            progressView.bringToFront();
+            progressView.invalidate();
         }
     }
 
-    private void showLoadingView(String progress, String des) {
-        if (loadingView != null) {
+    private void showProgressView(String progress, String des) {
+        if (progressView != null) {
             if (tvProgressTitle != null)
                 tvProgressTitle.setText(progress);
 
             if (tvProgressDesc != null)
                 tvProgressDesc.setText(des);
 
-            loadingView.setVisibility(VISIBLE);
-            loadingView.bringToFront();
-            loadingView.invalidate();
+            progressView.setVisibility(VISIBLE);
+            progressView.bringToFront();
+            progressView.invalidate();
         }
     }
 
@@ -323,9 +323,9 @@ public class RelativeViewLayout extends RevealRelativeLayout {
         }
     }
 
-    public void loadingClickListener(View.OnClickListener onClickListener) {
-        if (loadingView != null) {
-            loadingView.setOnClickListener(onClickListener);
+    public void progressViewClickListener(View.OnClickListener onClickListener) {
+        if (progressView != null) {
+            progressView.setOnClickListener(onClickListener);
         }
     }
 
@@ -350,9 +350,9 @@ public class RelativeViewLayout extends RevealRelativeLayout {
         }
     }
 
-    private void hideLoadingView() {
-        if (loadingView != null) {
-            loadingView.setVisibility(GONE);
+    private void hideProgressView() {
+        if (progressView != null) {
+            progressView.setVisibility(GONE);
         }
     }
 
@@ -368,45 +368,45 @@ public class RelativeViewLayout extends RevealRelativeLayout {
         }
     }
 
-    public View getLoadingView() {
-        return loadingView;
+    public View getProgressView() {
+        return progressView;
     }
 
-    public void setLoadingView(int id, int[] margin,int theme,int gravity) {
+    public void setProgressView(int id, int[] margin, int size, int gravity) {
         try {
-            this.loadingView = inflater.inflate(id, null);
-            this.loadingView.setTag(TAG_LOADING);
-            this.loadingView.setClickable(true);
-            this.loadingView.setVisibility(GONE);
+            this.progressView = inflater.inflate(id, null);
+            this.progressView.setTag(TAG_PROGRESS);
+            this.progressView.setClickable(true);
+            this.progressView.setVisibility(GONE);
 
             layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT);
             if (margin != null)
                 layoutParams.setMargins(margin[0], margin[1], margin[2], margin[3]);
 
-            tvProgressTitle = loadingView.findViewById(R.id.progress_title);
-            tvProgressDesc = loadingView.findViewById(R.id.progress_desc);
+            tvProgressTitle = progressView.findViewById(R.id.progress_title);
+            tvProgressDesc = progressView.findViewById(R.id.progress_desc);
 
-            addView(this.loadingView, layoutParams);
-            setLoadingViewTheme(theme,gravity);
+            addView(this.progressView, layoutParams);
+            setProgressViewSize(size, gravity);
         } catch (Exception e) {
             Log.d(TAG, e.getMessage());
         }
     }
 
 
-    public RelativeViewLayout setLoadingViewTheme(int theme, int gravity) {
+    public RelativeViewLayout setProgressViewSize(int size, int gravity) {
         try {
-            if (theme==MATCH_PARENT) {
+            if (size == MATCH_PARENT) {
                 layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT);
                 layoutParams.addRule(gravity);
-                this.loadingView.setLayoutParams(layoutParams);
+                this.progressView.setLayoutParams(layoutParams);
             } else {
                 layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.WRAP_CONTENT);
                 layoutParams.addRule(gravity);
-                this.loadingView.setLayoutParams(layoutParams);
+                this.progressView.setLayoutParams(layoutParams);
             }
         } catch (Exception e) {
             Log.d(TAG, e.getMessage());
@@ -414,9 +414,9 @@ public class RelativeViewLayout extends RevealRelativeLayout {
         return this;
     }
 
-    public RelativeViewLayout setErrorViewTheme(int theme, int gravity) {
+    public RelativeViewLayout setErrorViewSize(int size, int gravity) {
         try {
-            if (theme == MATCH_PARENT) {
+            if (size == MATCH_PARENT) {
                 layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT);
                 layoutParams.addRule(gravity);
@@ -433,9 +433,9 @@ public class RelativeViewLayout extends RevealRelativeLayout {
         return this;
     }
 
-    public RelativeViewLayout setEmptyViewTheme(int theme, int gravity) {
+    public RelativeViewLayout setEmptyViewSize(int size, int gravity) {
         try {
-            if (theme == MATCH_PARENT) {
+            if (size == MATCH_PARENT) {
                 layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                         ViewGroup.LayoutParams.MATCH_PARENT);
                 layoutParams.addRule(gravity);
@@ -456,7 +456,7 @@ public class RelativeViewLayout extends RevealRelativeLayout {
         return emptyView;
     }
 
-    public void setEmptyView(int id, int[] margin,int theme,int gravity) {
+    public void setEmptyView(int id, int[] margin, int size, int gravity) {
         try {
             this.emptyView = inflater.inflate(id, null);
             this.emptyView.setTag(TAG_EMPTY);
@@ -469,7 +469,7 @@ public class RelativeViewLayout extends RevealRelativeLayout {
                 layoutParams.setMargins(margin[0], margin[1], margin[2], margin[3]);
 
             addView(this.emptyView, layoutParams);
-            setEmptyViewTheme(theme, gravity);
+            setEmptyViewSize(size, gravity);
         } catch (Exception e) {
             Log.d(TAG, e.getMessage());
         }
@@ -480,7 +480,7 @@ public class RelativeViewLayout extends RevealRelativeLayout {
         return errorView;
     }
 
-    public void setErrorView(int id, int[] margin,int theme,int gravity) {
+    public void setErrorView(int id, int[] margin, int size, int gravity) {
         try {
             this.errorView = inflater.inflate(id, null);
             this.errorView.setTag(TAG_ERROR);
@@ -492,9 +492,17 @@ public class RelativeViewLayout extends RevealRelativeLayout {
             if (margin != null)
                 layoutParams.setMargins(margin[0], margin[1], margin[2], margin[3]);
             addView(this.errorView, layoutParams);
-            setErrorViewTheme(theme, gravity);
+            setErrorViewSize(size, gravity);
         } catch (Exception e) {
             Log.d(TAG, e.getMessage());
         }
+    }
+
+    public int getDelay() {
+        return delay;
+    }
+
+    public void setDelay(int delay) {
+        this.delay = delay;
     }
 }

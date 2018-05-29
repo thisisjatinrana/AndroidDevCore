@@ -1,53 +1,57 @@
 package rana.jatin.core.util.dialog;
 
+import android.support.annotation.DrawableRes;
+
 /**
  * Created by jatin on 5/23/2017.
  */
 
-public class DialogItem {
-    String image;
-    String name;
-    int txtColor = -1;
-    boolean divider = false;
-    boolean underLine = false;
-    int resId = -1;
+public class DialogData {
+    private String image;
+    private String name;
+    private int txtColor = -1;
+    private boolean divider = false;
+    private boolean underLine = false;
+    private int resId = -1;
+    private int underlineRes;
 
-    public DialogItem(String image, String name, int resId) {
+    public DialogData(String image, String name, int resId) {
         this.image = image;
         this.name = name;
         this.resId = resId;
     }
 
-    public DialogItem(String image, String name) {
+    public DialogData(String image, String name) {
         this.image = image;
         this.name = name;
     }
 
-    public DialogItem(String name, int txtColor) {
+    public DialogData(String name, int txtColor) {
         this.name = name;
         this.txtColor = txtColor;
     }
 
-    public DialogItem(String name) {
+    public DialogData(String name) {
         this.name = name;
     }
 
-    public DialogItem(String name, boolean divider) {
+    public DialogData(String name, boolean divider) {
         this.name = name;
         this.divider = divider;
     }
 
-    public DialogItem(String name, int txtColor, boolean divider) {
+    public DialogData(String name, int txtColor, boolean divider) {
         this.name = name;
         this.txtColor = txtColor;
         this.divider = divider;
     }
 
-    public DialogItem(String name, int txtColor, boolean underLine, boolean divider) {
+    public DialogData(String name, int txtColor, boolean underLine, @DrawableRes int underlineRes, boolean divider) {
         this.name = name;
         this.txtColor = txtColor;
         this.divider = divider;
         this.underLine = underLine;
+        this.underlineRes = underlineRes;
     }
 
     public boolean isDivider() {
@@ -93,6 +97,14 @@ public class DialogItem {
 
     public boolean isUnderLine() {
         return underLine;
+    }
+
+    public int getUnderlineRes() {
+        return underlineRes;
+    }
+
+    public void setUnderlineRes(int underlineRes) {
+        this.underlineRes = underlineRes;
     }
 
     public void setUnderLine(boolean underLine) {

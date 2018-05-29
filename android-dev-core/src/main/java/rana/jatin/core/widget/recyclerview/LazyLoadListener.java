@@ -10,7 +10,7 @@ public interface LazyLoadListener {
     boolean onScrollNext(int page, int totalItemsCount);
     boolean onScrollPrev(int page, int totalItemsCount);
 
-    void onScrolling();
+    void onScrolling(RecyclerView recyclerView, int dx, int dy);
 
     void onScrollingStateChanged(RecyclerView view, int scrollState);
 }

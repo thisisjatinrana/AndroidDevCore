@@ -18,7 +18,7 @@
         android:scaleType="fitCenter"
         android:visibility="gone" />
 
-    <rana.jatin.core.widget.BasicTextView
+    <rana.jatin.core.widget.BaseTextView
         android:id="@+id/tv_item_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

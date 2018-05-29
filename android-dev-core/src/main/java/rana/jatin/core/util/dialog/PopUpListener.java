@@ -7,8 +7,7 @@ import android.widget.PopupWindow;
  * Created by jatin on 6/29/2017.
  */
 
-public interface PopUpCallback {
+public interface PopUpListener {
     void onCallback(PopupWindow popupWindow, View v, int position);
-
     void onDismiss();
 }

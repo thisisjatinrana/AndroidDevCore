@@ -6,8 +6,7 @@ import android.view.View;
  * Created by jatin on 9/1/2017.
  */
 
-public interface DatePickerCallback {
+public interface DatePickerListener {
     void DatePicker(View view, int year, int month, int day);
-
     void onDismiss();
 }

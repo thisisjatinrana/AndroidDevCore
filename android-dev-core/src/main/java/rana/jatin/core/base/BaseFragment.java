@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
+import rana.jatin.core.rxbus.RxBus;
+
 /*
  *  BaseFragment is a super-powered {@link android.support.v4.app.Fragment Fragment}
  *  to be used with {@link rana.jatin.core.etc.FragmentHelper}
@@ -25,7 +27,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        RxBus.get().register(this);
     }
 
     @Override
@@ -36,7 +38,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
+        RxBus.get().unRegister(this);
     }
 
     /*

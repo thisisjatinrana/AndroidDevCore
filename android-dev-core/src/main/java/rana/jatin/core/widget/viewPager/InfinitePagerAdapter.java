@@ -1,4 +1,4 @@
-package rana.jatin.core.adapter.viewPager;
+package rana.jatin.core.widget.viewPager;
 
 import android.os.Parcelable;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -9,12 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /*
-*  InfinitePagerAdapter is a super-powered scroll infinitely {@link android.support.v4.view.PagerAdapter PagerAdapter}
+ *  InfinitePagerAdapter is a super-powered {@link android.support.v4.view.PagerAdapter PagerAdapter} to scroll infinitely
 *  to be used with {@link  android.support.v4.view.ViewPager ViewPager}
 */
 public class InfinitePagerAdapter extends PagerAdapter {
 
-    private static final String TAG = "InfinitePagerAdapter";
+    private static final String TAG = InfinitePagerAdapter.class.getName();
     private static final boolean DEBUG = false;
 
     private final PagerAdapter mPagerAdapter;

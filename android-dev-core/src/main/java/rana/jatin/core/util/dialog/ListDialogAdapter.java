@@ -1,6 +1,7 @@
 package rana.jatin.core.util.dialog;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,19 +11,19 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 
 import rana.jatin.core.R;
-import rana.jatin.core.adapter.recyclerview.BaseRecyclarAdapter;
 import rana.jatin.core.base.BaseViewHolder;
-import rana.jatin.core.widget.BasicTextView;
+import rana.jatin.core.widget.BaseTextView;
+import rana.jatin.core.widget.recyclerview.BaseRecyclerViewAdapter;
 
 
 /**
  * Created by jatin on 1/3/2017.
  */
 
-public class ListDialogAdapter extends BaseRecyclarAdapter {
+public class ListDialogAdapter extends BaseRecyclerViewAdapter {
 
     private Context mContext;
-    private ArrayList<DialogItem> dialogItems = new ArrayList<>();
+    private ArrayList<DialogData> dialogData = new ArrayList<>();
 
     // Provide a suitable constructor (depends on the kind of dataset)
     public ListDialogAdapter(Context context) {
@@ -30,7 +31,7 @@ public class ListDialogAdapter extends BaseRecyclarAdapter {
     }
 
     @Override
-    public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.rv_dialog_item, parent, false);
         return new ViewHolder(view);
@@ -45,28 +46,28 @@ public class ListDialogAdapter extends BaseRecyclarAdapter {
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return dialogItems.size();
+        return dialogData.size();
     }
 
-    public void setData(ArrayList<DialogItem> mDialogItems) {
-        dialogItems.addAll(mDialogItems);
+    public void setData(ArrayList<DialogData> mDialogData) {
+        dialogData.addAll(mDialogData);
         notifyDataSetChanged();
     }
 
-    public void insertItem(DialogItem mDialogItems) {
-        dialogItems.add(mDialogItems);
-        notifyItemInserted(dialogItems.size() - 1);
+    public void insertItem(DialogData mDialogItems) {
+        dialogData.add(mDialogItems);
+        notifyItemInserted(dialogData.size() - 1);
     }
 
     public void deleteItem(int position) {
-        dialogItems.remove(position);
+        dialogData.remove(position);
         notifyItemRemoved(position);
     }
 
     public class ViewHolder extends BaseViewHolder {
 
         private ImageView ivItemImage;
-        private BasicTextView tvItemName;
+        private BaseTextView tvItemName;
         private View divider;
 
         private ViewHolder(View view) {
@@ -79,37 +80,36 @@ public class ListDialogAdapter extends BaseRecyclarAdapter {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    listener.onClick(view, itemView, getAdapterPosition());
+                    clickListener.onClick(view, itemView, getAdapterPosition());
                 }
             });
 
-            if (dialogItems.get(position).getTxtColor() != -1) {
+            if (dialogData.get(position).getTxtColor() != -1) {
                 try {
-                    tvItemName.setTextColor(ContextCompat.getColor(mContext, dialogItems.get(position).getTxtColor()));
+                    tvItemName.setTextColor(ContextCompat.getColor(mContext, dialogData.get(position).getTxtColor()));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-            tvItemName.setText(dialogItems.get(position).getName());
+            tvItemName.setText(dialogData.get(position).getName());
 
-            if (dialogItems.get(position).getResId() != -1) {
+            if (dialogData.get(position).getResId() != -1) {
                 try {
-                    ivItemImage.setImageResource(dialogItems.get(position).getResId());
+                    ivItemImage.setImageResource(dialogData.get(position).getResId());
                     ivItemImage.setVisibility(View.VISIBLE);
                 } catch (Exception e) {
                     ivItemImage.setVisibility(View.GONE);
-
                 }
             } else {
                 ivItemImage.setVisibility(View.GONE);
             }
 
-            if (dialogItems.get(position).isUnderLine())
-                tvItemName.setBackgroundResource(R.drawable.underline_blue);
+            if (dialogData.get(position).isUnderLine())
+                tvItemName.setBackgroundResource(dialogData.get(position).getUnderlineRes());
             else
                 tvItemName.setBackgroundResource(R.drawable.underline_transparent);
 
-            if (dialogItems.get(position).isDivider())
+            if (dialogData.get(position).isDivider())
                 divider.setVisibility(View.VISIBLE);
             else
                 divider.setVisibility(View.GONE);

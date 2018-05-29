@@ -33,6 +33,17 @@ public class PermissionUtil {
         this.activity = baseActivity;
     }
 
+    private PermissionInterface permissionInterface;
+
+    public PermissionUtil(Activity baseActivity, PermissionInterface permissionInterface) {
+        this.activity = baseActivity;
+        this.permissionInterface = permissionInterface;
+    }
+
+    public void setPermissionInterface() {
+        this.permissionInterface = permissionInterface;
+    }
+
     /* check if audio permission granted
      *  return true if permission granted
      *  return false if permission not granted
@@ -109,6 +120,8 @@ public class PermissionUtil {
     /* request permission to READ_SMS */
     public boolean requestPermissionForReadSms() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_SMS)) {
+            if (permissionInterface != null)
+                permissionInterface.showRequestPermissionRationale(Manifest.permission.READ_SMS);
             return false;
         } else {
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_SMS}, READ_SMS_REQUEST_CODE);
@@ -119,6 +132,8 @@ public class PermissionUtil {
     /* request permission to SEND_SMS */
     public boolean requestPermissionForSendSms() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.SEND_SMS)) {
+            if (permissionInterface != null)
+                permissionInterface.showRequestPermissionRationale(Manifest.permission.SEND_SMS);
             return false;
         } else {
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.SEND_SMS}, WRITE_SMS_REQUEST_CODE);
@@ -129,6 +144,8 @@ public class PermissionUtil {
     /* request permission to RECORD_AUDIO */
     public boolean requestPermissionForRecord() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.RECORD_AUDIO)) {
+            if (permissionInterface != null)
+                permissionInterface.showRequestPermissionRationale(Manifest.permission.RECORD_AUDIO);
             return false;
         } else {
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.RECORD_AUDIO}, AUDIO_REQUEST_CODE);
@@ -139,6 +156,8 @@ public class PermissionUtil {
     /* request permission to WRITE_EXTERNAL_STORAGE */
     public boolean requestPermissionForExternalStorage() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            if (permissionInterface != null)
+                permissionInterface.showRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE);
             return false;
         } else {
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE);
@@ -150,6 +169,8 @@ public class PermissionUtil {
     /* request permission to ACCESS_FINE_LOCATION */
     public boolean requestPermissionForFineLocation() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.ACCESS_FINE_LOCATION)) {
+            if (permissionInterface != null)
+                permissionInterface.showRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION);
             return true;
         } else {
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, ACCESS_FINE_LOCATION_CODE);
@@ -160,6 +181,8 @@ public class PermissionUtil {
     /* request permission to ACCESS_COARSE_LOCATION */
     public boolean requestPermissionForCoarseLocation() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+            if (permissionInterface != null)
+                permissionInterface.showRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION);
             return false;
         } else {
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, ACCESS_COARSE_LOCATION_CODE);
@@ -170,6 +193,8 @@ public class PermissionUtil {
     /* request permission to READ_EXTERNAL_STORAGE */
     public boolean requestPermissionForReadExternalStorage() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            if (permissionInterface != null)
+                permissionInterface.showRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE);
             return false;
         } else {
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE);
@@ -180,6 +205,8 @@ public class PermissionUtil {
     /* request permission to CAMERA */
     public boolean requestPermissionForCamera() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.CAMERA)) {
+            if (permissionInterface != null)
+                permissionInterface.showRequestPermissionRationale(Manifest.permission.CAMERA);
             return false;
         } else {
             ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST_CODE);
@@ -213,10 +240,14 @@ public class PermissionUtil {
     /* check if requested permissions granted */
     public boolean isPermissionGranted(@NonNull int[] grantResults) {
         boolean permissionGranted = true;
-        for (int count = 0; count < grantResults.length; count++) {
-            if (grantResults[count] != PERMISSION_GRANTED)
+        for (int grantResult : grantResults) {
+            if (grantResult != PERMISSION_GRANTED)
                 permissionGranted = false;
         }
         return permissionGranted;
+    }
+
+    public interface PermissionInterface {
+        void showRequestPermissionRationale(String permission);
     }
 }

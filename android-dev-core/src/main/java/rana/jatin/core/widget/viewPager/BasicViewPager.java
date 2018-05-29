@@ -35,6 +35,12 @@ public class BasicViewPager extends ViewPager {
         }
     }
 
+    private void onTouchAction(MotionEvent event) {
+        if (mOnSwipeListener != null) {
+            mOnSwipeListener.onTouchAction(event);
+        }
+    }
+
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
 
@@ -52,6 +58,7 @@ public class BasicViewPager extends ViewPager {
     public boolean onTouchEvent(MotionEvent ev){
         if (!this.swipeEnabled)
             return false;
+        onTouchAction(ev);
         if(getCurrentItem()==0 || getCurrentItem()==getAdapter().getCount()-1){
             final int action = ev.getAction();
             float x = ev.getX();
@@ -77,6 +84,8 @@ public class BasicViewPager extends ViewPager {
     public interface OnSwipeListener {
         void onSwipeFirst();
         void onSwipeLast();
+
+        void onTouchAction(MotionEvent event);
     }
 
     public boolean isSwipeEnabled() {

@@ -3,10 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/AndroidDevCore.iml" filepath="$PROJECT_DIR$/.idea/AndroidDevCore.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ExampleDevCore.iml" filepath="$PROJECT_DIR$/ExampleDevCore.iml" />
       <module fileurl="file://$PROJECT_DIR$/android-dev-core/android-dev-core.iml" filepath="$PROJECT_DIR$/android-dev-core/android-dev-core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android-dev-core/android-dev-core.iml" filepath="$PROJECT_DIR$/android-dev-core/android-dev-core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Locale;
 
 import rana.jatin.core.etc.ContextWrapper;
+import rana.jatin.core.rxbus.RxBus;
 import rana.jatin.core.util.FragmentUtil;
 
 /*
@@ -26,7 +27,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        RxBus.get().register(this);
     }
 
     @Override
@@ -34,6 +35,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onPostCreate(savedInstanceState);
         onNewIntent(getIntent());
     }
+
 
     @Override
     protected final void onNewIntent(Intent intent) {
@@ -140,8 +142,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-
+        RxBus.get().unRegister(this);
     }
 
     @Override
@@ -152,6 +153,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
     }
 
 

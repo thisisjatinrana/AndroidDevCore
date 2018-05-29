@@ -8,31 +8,31 @@ import android.util.AttributeSet;
 
 import rana.jatin.core.R;
 
-public class BasicTextView extends AppCompatTextView {
+public class BaseTextView extends AppCompatTextView {
     private String typeFace = "";
 
-    public BasicTextView(Context context, AttributeSet attrs, int defStyle) {
+    public BaseTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(context, attrs);
         setTypeFace();
     }
 
-    public BasicTextView(Context context, AttributeSet attrs) {
+    public BaseTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs);
         setTypeFace();
     }
 
-    public BasicTextView(Context context) {
+    public BaseTextView(Context context) {
         super(context);
     }
 
     private void init(Context context, AttributeSet attrs) {
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.BasicTextView);
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.BaseTextView);
 
         for (int i = 0; i < array.getIndexCount(); ++i) {
             int attr = array.getIndex(i);
-            if (attr == R.styleable.BasicTextView_typeFace)
+            if (attr == R.styleable.BaseTextView_typeFace)
                 typeFace = array.getString(attr);
         }
         array.recycle();

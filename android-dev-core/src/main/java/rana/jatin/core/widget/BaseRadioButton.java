@@ -3,36 +3,38 @@ package rana.jatin.core.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
-import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatRadioButton;
 import android.util.AttributeSet;
 
 import rana.jatin.core.R;
 
-public class BasicEditText extends AppCompatEditText {
+
+public class BaseRadioButton extends AppCompatRadioButton {
 
     private String typeFace = "";
-    public BasicEditText(Context context, AttributeSet attrs, int defStyle) {
+
+    public BaseRadioButton(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        init(context,attrs);
+        init(context, attrs);
         setTypeFace();
     }
 
-    public BasicEditText(Context context, AttributeSet attrs) {
+    public BaseRadioButton(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context,attrs);
+        init(context, attrs);
         setTypeFace();
     }
 
-    public BasicEditText(Context context) {
+    public BaseRadioButton(Context context) {
         super(context);
     }
 
     private void init(Context context, AttributeSet attrs) {
-        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.BasicEditText);
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.BaseRadioButton);
 
         for (int i = 0; i < array.getIndexCount(); ++i) {
             int attr = array.getIndex(i);
-            if (attr == R.styleable.BasicEditText_typeFace)
+            if (attr == R.styleable.BaseRadioButton_typeFace)
                 typeFace = array.getString(attr);
         }
         array.recycle();
@@ -47,5 +49,4 @@ public class BasicEditText extends AppCompatEditText {
             }
         }
     }
-
 }

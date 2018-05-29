@@ -48,12 +48,12 @@ public class ActionBar extends RelativeLayout {
     private ColorStateList centerTextColor = ContextCompat.getColorStateList(getContext(), R.color.black);
 
     private int padding = 20;
-    private AppCompatImageView ivRight;
-    private TextView tvRight;
-    private TextView tvCenter;
-    private AppCompatImageView ivLeft;
-    private AppCompatImageView ivCenter;
-    private TextView tvLeft;
+    private AppCompatImageView rightImageView;
+    private TextView rightTextView;
+    private TextView centerTextView;
+    private AppCompatImageView leftImageView;
+    private AppCompatImageView centerImageView;
+    private TextView leftTextView;
 
     public ActionBar(Context context) {
         super(context);
@@ -130,94 +130,94 @@ public class ActionBar extends RelativeLayout {
 
     private void setView() {
 
-        tvCenter = new TextView(getContext());
-        tvCenter.setText(centericonText);
-        tvCenter.setTextColor(centerTextColor);
-        tvCenter.setTextSize(TypedValue.COMPLEX_UNIT_PX, mCenterTextSize);
-        tvCenter.setId(Util.getInstance().generateViewId());
+        centerTextView = new TextView(getContext());
+        centerTextView.setText(centericonText);
+        centerTextView.setTextColor(centerTextColor);
+        centerTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mCenterTextSize);
+        centerTextView.setId(Util.getInstance().generateViewId());
 
         if (!centerTypeFace.isEmpty()) {
             Typeface tf = Typeface.createFromAsset(getContext().getAssets(),
                     "fonts/" + centerTypeFace);
-            tvCenter.setTypeface(tf);
+            centerTextView.setTypeface(tf);
         }
 
         LayoutParams p = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         p.addRule(RelativeLayout.CENTER_IN_PARENT);
-        tvCenter.setLayoutParams(p);
-        this.addView(tvCenter);
+        centerTextView.setLayoutParams(p);
+        this.addView(centerTextView);
 
-        ivCenter = new AppCompatImageView(getContext());
-        ivCenter.setImageResource(mcenterIcon);
-        ivCenter.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        centerImageView = new AppCompatImageView(getContext());
+        centerImageView.setImageResource(mcenterIcon);
+        centerImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         p = new LayoutParams(mcenterIconSize,
                 mcenterIconSize);
         p.addRule(RelativeLayout.CENTER_IN_PARENT);
-        ivCenter.setLayoutParams(p);
-        this.addView(ivCenter);
+        centerImageView.setLayoutParams(p);
+        this.addView(centerImageView);
 
-        ivLeft = new AppCompatImageView(getContext());
-        ivLeft.setImageResource(mLeftIcon);
-        ivLeft.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        ivLeft.setId(Util.getInstance().generateViewId());
+        leftImageView = new AppCompatImageView(getContext());
+        leftImageView.setImageResource(mLeftIcon);
+        leftImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        leftImageView.setId(Util.getInstance().generateViewId());
         p = new LayoutParams(mLeftIconSize,
                 mLeftIconSize);
         p.addRule(RelativeLayout.ALIGN_PARENT_START);
         p.addRule(RelativeLayout.CENTER_VERTICAL);
-        ivLeft.setLayoutParams(p);
-        this.addView(ivLeft);
+        leftImageView.setLayoutParams(p);
+        this.addView(leftImageView);
 
 
-        tvLeft = new TextView(getContext());
-        tvLeft.setText(lefticonText);
-        tvLeft.setTextColor(leftTextColor);
-        tvLeft.setTextSize(TypedValue.COMPLEX_UNIT_PX, mLeftTextSize);
+        leftTextView = new TextView(getContext());
+        leftTextView.setText(lefticonText);
+        leftTextView.setTextColor(leftTextColor);
+        leftTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mLeftTextSize);
 
         if (!leftTypeFace.isEmpty()) {
             Typeface tf = Typeface.createFromAsset(getContext().getAssets(),
                     "fonts/" + leftTypeFace);
-            tvLeft.setTypeface(tf);
+            leftTextView.setTypeface(tf);
         }
 
         p = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        p.addRule(RelativeLayout.END_OF, ivLeft.getId());
+        p.addRule(RelativeLayout.END_OF, leftImageView.getId());
         p.addRule(RelativeLayout.CENTER_VERTICAL);
         p.setMarginStart(padding);
-        tvLeft.setLayoutParams(p);
-        this.addView(tvLeft);
+        leftTextView.setLayoutParams(p);
+        this.addView(leftTextView);
 
 
-        ivRight = new AppCompatImageView(getContext());
-        ivRight.setImageResource(mRightIcon);
-        ivRight.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        ivRight.setId(Util.getInstance().generateViewId());
+        rightImageView = new AppCompatImageView(getContext());
+        rightImageView.setImageResource(mRightIcon);
+        rightImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+        rightImageView.setId(Util.getInstance().generateViewId());
         p = new LayoutParams(mRightIconSize,
                 mRightIconSize);
         p.addRule(RelativeLayout.ALIGN_PARENT_END);
         p.addRule(RelativeLayout.CENTER_VERTICAL);
-        ivRight.setLayoutParams(p);
-        this.addView(ivRight);
+        rightImageView.setLayoutParams(p);
+        this.addView(rightImageView);
 
-        tvRight = new TextView(getContext());
-        tvRight.setText(righticonText);
-        tvRight.setTextColor(rightTextColor);
-        tvRight.setTextSize(TypedValue.COMPLEX_UNIT_PX, mRightTextSize);
+        rightTextView = new TextView(getContext());
+        rightTextView.setText(righticonText);
+        rightTextView.setTextColor(rightTextColor);
+        rightTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mRightTextSize);
 
         if (!rightTypeFace.isEmpty()) {
             Typeface tf = Typeface.createFromAsset(getContext().getAssets(),
                     "fonts/" + rightTypeFace);
-            tvRight.setTypeface(tf);
+            rightTextView.setTypeface(tf);
         }
 
         p = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        p.addRule(RelativeLayout.START_OF, ivRight.getId());
+        p.addRule(RelativeLayout.START_OF, rightImageView.getId());
         p.addRule(RelativeLayout.CENTER_VERTICAL);
         p.setMargins(0, 0, padding, 0);
-        tvRight.setLayoutParams(p);
-        this.addView(tvRight);
+        rightTextView.setLayoutParams(p);
+        this.addView(rightTextView);
 
     }
 
@@ -225,74 +225,86 @@ public class ActionBar extends RelativeLayout {
     * set click listener on left view
     * @param onClick listener
     */
-    public void setLeftClickListener(OnClickListener onClick) {
-        ivLeft.setOnClickListener(onClick);
-        tvLeft.setOnClickListener(onClick);
+    public void setLeftViewClickListener(OnClickListener onClick) {
+        leftImageView.setOnClickListener(onClick);
+        leftTextView.setOnClickListener(onClick);
     }
 
     /*
     * set click listener on right view
     * @param onClick listener
     */
-    public void setRightClickListener(OnClickListener onClick) {
-        ivRight.setOnClickListener(onClick);
-        tvRight.setOnClickListener(onClick);
+    public void setRightViewClickListener(OnClickListener onClick) {
+        rightImageView.setOnClickListener(onClick);
+        rightTextView.setOnClickListener(onClick);
     }
 
     /*
     * set click listener of center view
     * @param onClick listener
     */
-    public void setCenterClickListener(OnClickListener onClick) {
-        ivCenter.setOnClickListener(onClick);
-        tvCenter.setOnClickListener(onClick);
+    public void setCenterViewClickListener(OnClickListener onClick) {
+        centerImageView.setOnClickListener(onClick);
+        centerTextView.setOnClickListener(onClick);
     }
 
     public void setCenterText(String text) {
-        tvCenter.setText(text);
+        centerTextView.setText(text);
     }
 
     public void setLeftText(String text) {
-        tvLeft.setText(text);
+        leftTextView.setText(text);
     }
 
     public void setRightText(String text) {
-        tvRight.setText(text);
+        rightTextView.setText(text);
     }
 
     public void setCenterTextColor(int color) {
-        tvCenter.setTextColor(color);
+        centerTextView.setTextColor(color);
     }
 
     public void setLeftTextColor(int color) {
-        tvLeft.setTextColor(color);
+        leftTextView.setTextColor(color);
     }
 
     public void setRightTextColor(int color) {
-        tvRight.setTextColor(color);
+        rightTextView.setTextColor(color);
     }
 
     public void setLeftIcon(int id) {
-        ivLeft.setImageResource(id);
+        leftImageView.setImageResource(id);
     }
 
     public void setRightIcon(int id) {
-        ivRight.setImageResource(id);
+        rightImageView.setImageResource(id);
     }
 
     public void setCenterIcon(int id) {
-        ivCenter.setImageResource(id);
+        centerImageView.setImageResource(id);
     }
 
-    public TextView getTvRight() {
-        return tvRight;
+    public TextView getRightTextView() {
+        return rightTextView;
     }
 
-    public TextView getTvCenter() {
-        return tvCenter;
+    public TextView getCenterTextView() {
+        return centerTextView;
     }
 
-    public TextView getTvLeft() {
-        return tvLeft;
+    public TextView getLeftTextView() {
+        return leftTextView;
+    }
+
+    public AppCompatImageView getRightImageView() {
+        return rightImageView;
+    }
+
+    public AppCompatImageView getLeftImageView() {
+        return leftImageView;
+    }
+
+    public AppCompatImageView getCenterImageView() {
+        return centerImageView;
     }
 }

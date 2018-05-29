@@ -8,10 +8,6 @@
         <attr name="outerBorderColor" format="color" />
         <attr name="outerBorderWidth" format="dimension" />
         <attr name="cornerRadius" format="dimension" />
-        <!-- <attr namodelTypetype" format="enum">
-            <enum name="circle" value="0" />
-            <enum name="roundedRect" value="1" />
-        </attr> -->
     </declare-styleable>
 
     <declare-styleable name="FixedAspectRatioLayout">
@@ -19,7 +15,7 @@
         <attr name="apply" format="boolean" />
     </declare-styleable>
 
-    <declare-styleable name="Root">
+    <declare-styleable name="Base">
         <attr name="marginTop" format="dimension" />
         <attr name="marginBottom" format="dimension" />
         <attr name="marginLeft" format="dimension" />
@@ -39,7 +35,7 @@
         <attr name="centerIconSrc" format="reference" />
         <attr name="centerIconSize" format="dimension" />
         <attr name="centerIconPadding" format="dimension" />
-        <attr name="alignIconCorner" format="boolean" />
+        <attr name="iconFitXY" format="boolean" />
 
         <attr name="text" format="string" />
         <attr name="textColor" format="color" />
@@ -74,29 +70,29 @@
 
     </declare-styleable>
 
-    <declare-styleable name="RootLayout" parent="Root">
+    <declare-styleable name="ViewLayout" parent="Base">
         <attr name="emptyView" format="reference" />
         <attr name="progressView" format="reference" />
         <attr name="errorView" format="reference" />
 
-        <attr name="emptyViewTheme" >
+        <attr name="emptyViewSize">
         <flag name="wrap_content" value="1" />
         <flag name="match_parent" value="2" />
         </attr>
 
-        <attr name="progressViewTheme" >
+        <attr name="progressViewSize">
             <flag name="wrap_content" value="1" />
         <flag name="match_parent" value="2" />
        </attr>
 
-        <attr name="errorViewTheme">
+        <attr name="errorViewSize">
         <flag name="wrap_content" value="1" />
         <flag name="match_parent" value="2" />
        </attr>
     </declare-styleable>
 
 
-    <declare-styleable name="RelativeViewLayout" parent="RootLayout">
+    <declare-styleable name="RelativeViewLayout" parent="ViewLayout">
         <attr name="emptyView" />
         <attr name="progressView" />
         <attr name="errorView" />
@@ -104,26 +100,29 @@
         <attr name="marginBottom" />
         <attr name="marginLeft" />
         <attr name="marginRight" />
-        <attr name="emptyViewTheme"  />
-        <attr name="progressViewTheme" />
-        <attr name="errorViewTheme"  />
+        <attr name="emptyViewSize" />
+        <attr name="progressViewSize" />
+        <attr name="errorViewSize" />
         <attr name="emptyViewAlign">
-            <flag name="alignParentBottom" value="12" />
-            <flag name="alignParentTop" value="17" />
+            <flag name="bottom" value="12" />
+            <flag name="center" value="10" />
+            <flag name="top" value="17" />
         </attr>
 
         <attr name="progressViewAlign">
-            <flag name="alignParentBottom" value="12" />
-            <flag name="alignParentTop" value="17" />
+            <flag name="bottom" value="12" />
+            <flag name="center" value="10" />
+            <flag name="top" value="17" />
         </attr>
 
         <attr name="errorViewAlign">
-            <flag name="alignParentBottom" value="12" />
-            <flag name="alignParentTop" value="17" />
+            <flag name="bottom" value="12" />
+            <flag name="center" value="10" />
+            <flag name="top" value="17" />
         </attr>
     </declare-styleable>
 
-    <declare-styleable name="FrameViewLayout" parent="RootLayout">
+    <declare-styleable name="FrameViewLayout" parent="ViewLayout">
         <attr name="emptyView" />
         <attr name="progressView" />
         <attr name="errorView" />
@@ -131,9 +130,9 @@
         <attr name="marginBottom" />
         <attr name="marginLeft" />
         <attr name="marginRight" />
-        <attr name="emptyViewTheme"  />
-        <attr name="progressViewTheme" />
-        <attr name="errorViewTheme"  />
+        <attr name="emptyViewSize" />
+        <attr name="progressViewSize" />
+        <attr name="errorViewSize" />
         <attr name="emptyViewGravity">
             <flag name="bottom" value="80" />
             <flag name="center" value="17" />
@@ -186,7 +185,7 @@
         </attr>
     </declare-styleable>
 
-    <declare-styleable name="DrawableTextView" parent="Root">
+    <declare-styleable name="DrawableTextView" parent="Base">
         <attr name="leftIconSrc" />
         <attr name="leftIconSize"  />
         <attr name="leftIconPadding"  />
@@ -199,7 +198,7 @@
         <attr name="bottomIconSrc"  />
         <attr name="bottomIconSize"  />
         <attr name="bottomIconPadding"  />
-        <attr name="alignIconCorner"  />
+        <attr name="iconFitXY" />
         <attr name="typeFace"/>
         <attr name="text"  />
         <attr name="textColor"  />
@@ -207,7 +206,7 @@
         <attr name="textSize"  />
     </declare-styleable>
 
-    <declare-styleable name="DrawableEditText" parent="Root">
+    <declare-styleable name="DrawableEditText" parent="Base">
         <attr name="backgroundSrc"  />
         <attr name="leftIconSrc"  />
         <attr name="leftIconSize"  />
@@ -237,7 +236,7 @@
         </attr>
     </declare-styleable>
 
-    <declare-styleable name="ActionBar" parent="Root">
+    <declare-styleable name="ActionBar" parent="Base">
         <attr name="leftText" format="string" />
         <attr name="leftTextSize" format="dimension" />
         <attr name="leftTextColor" format="color" />
@@ -264,23 +263,23 @@
 
     </declare-styleable>
 
-    <declare-styleable name="BasicTextView"  parent="Root">
+    <declare-styleable name="BaseTextView" parent="Base">
         <attr name="typeFace"/>
     </declare-styleable>
 
-    <declare-styleable name="BasicEmojiTextView" parent="Root">
+    <declare-styleable name="BaseEmojiTextView" parent="Base">
         <attr name="typeFace" />
     </declare-styleable>
 
-    <declare-styleable name="BasicEditText"  parent="Root">
+    <declare-styleable name="BaseEditText" parent="Base">
         <attr name="typeFace"/>
     </declare-styleable>
 
-    <declare-styleable name="BasicButton"  parent="Root">
+    <declare-styleable name="BaseButton" parent="Base">
         <attr name="typeFace"/>
     </declare-styleable>
 
-    <declare-styleable name="BasicRadioButton" parent="Root">
+    <declare-styleable name="BaseRadioButton" parent="Base">
         <attr name="typeFace" />
     </declare-styleable>
 
