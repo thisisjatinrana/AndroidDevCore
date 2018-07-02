@@ -157,6 +157,20 @@ public class RelativeViewLayout extends RevealRelativeLayout {
     }
 
     /**
+     * Hide content and show the empty view with text
+     */
+    public void showEmpty(String progress, String des, String btnTxt) {
+        switchState(EMPTY, progress, des, btnTxt, Collections.<Integer>emptyList());
+    }
+
+    /**
+     * Hide content and show the the error view with text
+     */
+    public void showError(String progress, String des, String btnTxt) {
+        switchState(ERROR, progress, des, btnTxt, Collections.<Integer>emptyList());
+    }
+
+    /**
      * Show empty view when there are not data to show
      *
      * @param skipIds Ids of views to not hide
@@ -316,8 +330,12 @@ public class RelativeViewLayout extends RevealRelativeLayout {
             if (tvProgressDesc != null)
                 tvProgressDesc.setText(des);
 
-            if (btnProgressButton != null)
-                btnProgressButton.setText(btnTxt);
+            if (btnProgressButton != null) {
+                if (btnTxt != null && !btnTxt.isEmpty())
+                    btnProgressButton.setText(btnTxt);
+                else
+                    btnProgressButton.setVisibility(GONE);
+            }
 
             progressView.setVisibility(VISIBLE);
             progressView.bringToFront();
@@ -333,8 +351,12 @@ public class RelativeViewLayout extends RevealRelativeLayout {
             if (tvEmptyDesc != null)
                 tvEmptyDesc.setText(des);
 
-            if (btnEmptyButton != null)
-                btnEmptyButton.setText(btnTxt);
+            if (btnEmptyButton != null) {
+                if (btnTxt != null && !btnTxt.isEmpty())
+                    btnEmptyButton.setText(btnTxt);
+                else
+                    btnEmptyButton.setVisibility(GONE);
+            }
 
             emptyView.setVisibility(VISIBLE);
             emptyView.bringToFront();
@@ -350,8 +372,12 @@ public class RelativeViewLayout extends RevealRelativeLayout {
             if (tvErrorDesc != null)
                 tvErrorDesc.setText(des);
 
-            if (btnErrorButton != null)
-                btnErrorButton.setText(btnTxt);
+            if (btnErrorButton != null) {
+                if (btnTxt != null && !btnTxt.isEmpty())
+                    btnErrorButton.setText(btnTxt);
+                else
+                    btnErrorButton.setVisibility(GONE);
+            }
 
             errorView.setVisibility(VISIBLE);
             errorView.bringToFront();
@@ -426,6 +452,12 @@ public class RelativeViewLayout extends RevealRelativeLayout {
         }
     }
 
+    public void progressViewBtnClickListener(View.OnClickListener onClickListener) {
+        if (progressView != null && btnProgressButton != null) {
+            btnProgressButton.setOnClickListener(onClickListener);
+        }
+    }
+
     public void emptyViewClickListener(View.OnClickListener onClickListener) {
         if (emptyView != null) {
             emptyView.setOnClickListener(onClickListener);
@@ -433,9 +465,22 @@ public class RelativeViewLayout extends RevealRelativeLayout {
 
     }
 
+    public void emptyViewBtnClickListener(View.OnClickListener onClickListener) {
+        if (emptyView != null && btnEmptyButton != null) {
+            btnEmptyButton.setOnClickListener(onClickListener);
+        }
+
+    }
+
     public void errorViewClickListener(View.OnClickListener onClickListener) {
         if (errorView != null) {
             errorView.setOnClickListener(onClickListener);
+        }
+    }
+
+    public void errorViewBtnClickListener(View.OnClickListener onClickListener) {
+        if (errorView != null && btnErrorButton != null) {
+            btnErrorButton.setOnClickListener(onClickListener);
         }
     }
 
@@ -566,9 +611,9 @@ public class RelativeViewLayout extends RevealRelativeLayout {
             if (margin != null)
                 layoutParams.setMargins(margin[0], margin[1], margin[2], margin[3]);
 
-            tvEmptyTitle = progressView.findViewById(R.id.progress_title);
-            tvEmptyDesc = progressView.findViewById(R.id.progress_desc);
-            btnEmptyButton = progressView.findViewById(R.id.btnAction);
+            tvEmptyTitle = emptyView.findViewById(R.id.progress_title);
+            tvEmptyDesc = emptyView.findViewById(R.id.progress_desc);
+            btnEmptyButton = emptyView.findViewById(R.id.btnAction);
 
             addView(this.emptyView, layoutParams);
             setEmptyViewSize(size, gravity);
@@ -594,9 +639,9 @@ public class RelativeViewLayout extends RevealRelativeLayout {
             if (margin != null)
                 layoutParams.setMargins(margin[0], margin[1], margin[2], margin[3]);
 
-            tvErrorTitle = progressView.findViewById(R.id.progress_title);
-            tvErrorDesc = progressView.findViewById(R.id.progress_desc);
-            btnErrorButton = progressView.findViewById(R.id.btnAction);
+            tvErrorTitle = errorView.findViewById(R.id.progress_title);
+            tvErrorDesc = errorView.findViewById(R.id.progress_desc);
+            btnErrorButton = errorView.findViewById(R.id.btnAction);
 
             addView(this.errorView, layoutParams);
             setErrorViewSize(size, gravity);

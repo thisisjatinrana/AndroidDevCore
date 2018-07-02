@@ -440,6 +440,25 @@ public class FrameViewLayout extends RevealFrameLayout {
         }
     }
 
+    public void errorViewBtnClickListener(View.OnClickListener onClickListener) {
+        if (errorView != null && btnErrorButton != null) {
+            btnErrorButton.setOnClickListener(onClickListener);
+        }
+    }
+
+    public void emptyViewBtnClickListener(View.OnClickListener onClickListener) {
+        if (emptyView != null && btnEmptyButton != null) {
+            btnEmptyButton.setOnClickListener(onClickListener);
+        }
+
+    }
+
+    public void progressViewBtnClickListener(View.OnClickListener onClickListener) {
+        if (progressView != null && btnProgressButton != null) {
+            btnProgressButton.setOnClickListener(onClickListener);
+        }
+    }
+
     private void setContentVisibility(boolean visible, List<Integer> skipIds) {
         for (View v : contentViews) {
             if (!skipIds.contains(v.getId())) {
@@ -464,6 +483,20 @@ public class FrameViewLayout extends RevealFrameLayout {
         if (errorView != null) {
             errorView.setVisibility(GONE);
         }
+    }
+
+    /**
+     * Hide content and show the empty view with text
+     */
+    public void showEmpty(String progress, String des, String btnTxt) {
+        switchState(EMPTY, progress, des, btnTxt, Collections.<Integer>emptyList());
+    }
+
+    /**
+     * Hide content and show the the error view with text
+     */
+    public void showError(String progress, String des, String btnTxt) {
+        switchState(ERROR, progress, des, btnTxt, Collections.<Integer>emptyList());
     }
 
     public View getProgressView() {
