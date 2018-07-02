@@ -3,7 +3,7 @@ apply plugin: 'com.android.library'
 ext {
     PUBLISH_GROUP_ID = 'com.jatin'
     PUBLISH_ARTIFACT_ID = 'android-dev-core'
-    PUBLISH_VERSION = '3.0.0'
+    PUBLISH_VERSION = '3.0.1'
 }
 
 android {
@@ -12,8 +12,8 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 3
-        versionName "3.0"
+        versionCode 4
+        versionName "3.1"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -44,8 +44,8 @@ dependencies {
     //gson
     api "com.google.code.gson:gson:$rootProject.gsonVersion"
 
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile "io.reactivex.rxjava2:rxjava:2.1.0"
+    api 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    api "io.reactivex.rxjava2:rxjava:2.1.0"
 
     testImplementation 'junit:junit:4.12'
 }

@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -34,8 +35,22 @@ public class RelativeViewLayout extends RevealRelativeLayout {
     private View progressView;
     private View emptyView;
     private View errorView;
+
+    //progress views
     private TextView tvProgressTitle;
     private TextView tvProgressDesc;
+    private Button btnProgressButton;
+
+    //empty views
+    private TextView tvEmptyTitle;
+    private TextView tvEmptyDesc;
+    private Button btnEmptyButton;
+
+    //error views
+    private TextView tvErrorTitle;
+    private TextView tvErrorDesc;
+    private Button btnErrorButton;
+
     private String TAG = RelativeViewLayout.class.getName();
     private String state = CONTENT;
     private RelativeLayout.LayoutParams layoutParams;
@@ -137,8 +152,8 @@ public class RelativeViewLayout extends RevealRelativeLayout {
     /**
      * Hide content and show the progress bar with progress text
      */
-    public void showProgress(String progress, String des) {
-        switchState(PROGRESS, progress, des, Collections.<Integer>emptyList());
+    public void showProgress(String progress, String des, String btnTxt) {
+        switchState(PROGRESS, progress, des, btnTxt, Collections.<Integer>emptyList());
     }
 
     /**
@@ -249,7 +264,7 @@ public class RelativeViewLayout extends RevealRelativeLayout {
         }
     }
 
-    private void switchState(String state, String messageTitle, String messageDesc, List<Integer> skipIds) {
+    private void switchState(String state, String messageTitle, String messageDesc, String btnTxt, List<Integer> skipIds) {
         this.state = state;
 
         switch (state) {
@@ -265,21 +280,21 @@ public class RelativeViewLayout extends RevealRelativeLayout {
                 hideEmptyView();
                 hideErrorView();
 
-                showProgressView(messageTitle, messageDesc);
+                showProgressView(messageTitle, messageDesc, btnTxt);
                 // setContentVisibility(false, skipIds);
                 break;
             case EMPTY:
                 hideProgressView();
                 hideErrorView();
 
-                showEmptyView();
+                showEmptyView(messageTitle, messageDesc, btnTxt);
                 //   setContentVisibility(false, skipIds);
                 break;
             case ERROR:
                 hideProgressView();
                 hideEmptyView();
 
-                showErrorView();
+                showErrorView(messageTitle, messageDesc, btnTxt);
                 // setContentVisibility(false, skipIds);
                 break;
         }
@@ -293,7 +308,7 @@ public class RelativeViewLayout extends RevealRelativeLayout {
         }
     }
 
-    private void showProgressView(String progress, String des) {
+    private void showProgressView(String progress, String des, String btnTxt) {
         if (progressView != null) {
             if (tvProgressTitle != null)
                 tvProgressTitle.setText(progress);
@@ -301,9 +316,90 @@ public class RelativeViewLayout extends RevealRelativeLayout {
             if (tvProgressDesc != null)
                 tvProgressDesc.setText(des);
 
+            if (btnProgressButton != null)
+                btnProgressButton.setText(btnTxt);
+
             progressView.setVisibility(VISIBLE);
             progressView.bringToFront();
             progressView.invalidate();
+        }
+    }
+
+    private void showEmptyView(String title, String des, String btnTxt) {
+        if (emptyView != null) {
+            if (tvEmptyTitle != null)
+                tvEmptyTitle.setText(title);
+
+            if (tvEmptyDesc != null)
+                tvEmptyDesc.setText(des);
+
+            if (btnEmptyButton != null)
+                btnEmptyButton.setText(btnTxt);
+
+            emptyView.setVisibility(VISIBLE);
+            emptyView.bringToFront();
+            emptyView.invalidate();
+        }
+    }
+
+    private void showErrorView(String title, String des, String btnTxt) {
+        if (errorView != null) {
+            if (tvErrorTitle != null)
+                tvErrorTitle.setText(title);
+
+            if (tvErrorDesc != null)
+                tvErrorDesc.setText(des);
+
+            if (btnErrorButton != null)
+                btnErrorButton.setText(btnTxt);
+
+            errorView.setVisibility(VISIBLE);
+            errorView.bringToFront();
+            errorView.invalidate();
+        }
+    }
+
+    public void resetViews() {
+
+        if (progressView != null) {
+            if (tvProgressTitle != null)
+                tvProgressTitle.setText("");
+
+            if (tvProgressDesc != null)
+                tvProgressDesc.setText("");
+
+            if (btnProgressButton != null)
+                btnProgressButton.setText("");
+
+            progressView.setVisibility(VISIBLE);
+            progressView.bringToFront();
+            progressView.invalidate();
+        }
+
+        if (emptyView != null) {
+            if (tvEmptyTitle != null)
+                tvEmptyTitle.setText("");
+
+            if (tvEmptyDesc != null)
+                tvEmptyDesc.setText("");
+
+            if (btnEmptyButton != null)
+                btnEmptyButton.setText("");
+
+            emptyView.setVisibility(VISIBLE);
+            emptyView.bringToFront();
+            emptyView.invalidate();
+        }
+
+        if (errorView != null) {
+            if (tvErrorTitle != null)
+                tvErrorTitle.setText("");
+
+            if (tvErrorDesc != null)
+                tvErrorDesc.setText("");
+
+            if (btnErrorButton != null)
+                btnErrorButton.setText("");
         }
     }
 
@@ -322,6 +418,7 @@ public class RelativeViewLayout extends RevealRelativeLayout {
             errorView.invalidate();
         }
     }
+
 
     public void progressViewClickListener(View.OnClickListener onClickListener) {
         if (progressView != null) {

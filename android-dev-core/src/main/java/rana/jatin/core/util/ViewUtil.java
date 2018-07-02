@@ -1,6 +1,7 @@
 package rana.jatin.core.util;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.net.Uri;
@@ -54,42 +55,60 @@ public class ViewUtil {
         activity.startActivity(intent);
     }
 
-    /* show soft keyboardOpen */
+    /* show soft keyboard */
     public void showSoftInput(final EditText editText) {
 
         Handler mHandler = new Handler();
         mHandler.post(
                 new Runnable() {
                     public void run() {
-                        try {
-                            InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(INPUT_METHOD_SERVICE);
-                            inputMethodManager.toggleSoftInputFromWindow(editText.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
-                            editText.requestFocus();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-
+                        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(INPUT_METHOD_SERVICE);
+                        inputMethodManager.toggleSoftInputFromWindow(editText.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
+                        editText.requestFocus();
                     }
                 });
     }
 
-    /* hide soft keyboardOpen*/
-    public void hideSoftInput() {
+    /* hide soft keyboard*/
+    public void toggleSoftInput() {
 
-        if (!isKeyboardOpen())
+        if (!keyboardOpen)
             return;
         Handler mHandler = new Handler();
         mHandler.post(
                 new Runnable() {
                     public void run() {
-                        try {
-                            InputMethodManager inputManager = (InputMethodManager) activity.getSystemService(INPUT_METHOD_SERVICE);
-                            inputManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                        InputMethodManager inputManager = (InputMethodManager) activity.getSystemService(INPUT_METHOD_SERVICE);
+                        inputManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+                        keyboardOpen = false;
                     }
                 });
+    }
+
+    // This utility method is used with fragment
+    // view = getView().getRootView();
+    // view = fragment.getView();
+    public void hideKeyboardFrom(Context context, View view) {
+        if (view == null)
+            view = new View(activity);
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        view.clearFocus();
+        keyboardOpen = false;
+    }
+
+    // This utility method ONLY works when called from an Activity
+    public void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        view.clearFocus();
+        keyboardOpen = false;
     }
 
     /*
@@ -399,6 +418,24 @@ public class ViewUtil {
         if (snackbar != null)
             snackbar.getView().setBackgroundColor(ContextCompat.getColor(activity, background));
         return this;
+    }
+
+    public boolean isActivityDead(Activity activity) {
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            // Do something for lollipop and above versions
+            return activity == null || activity.isFinishing() || activity.isDestroyed();
+        } else {
+            // do something for phones running an SDK before lollipop
+            return activity == null || activity.isFinishing();
+        }
+
+    }
+
+    public boolean isFragmentDead(Fragment fragment) {
+        if (fragment == null)
+            return true;
+        Activity activity = fragment.getActivity();
+        return activity == null || !fragment.isAdded() || fragment.isRemoving() || fragment.isDetached();
     }
 
     public interface KeyboardListener {
