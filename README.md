@@ -11,7 +11,7 @@ For a working implementation of this library visit https://apppoetryblog.wordpre
 You can grab the library via Jcenter. Just add a proper dependency inside your build.gradle. Like this:
 
 dependencies {
-    compile 'com.jatin:android-dev-core:3.0.0'
+    compile 'com.jatin:android-dev-core:3.0.1'
 }
 
 # Developed by
