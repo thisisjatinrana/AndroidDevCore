@@ -13,5 +13,6 @@
     <string name="bold_text">SFCompactText_Bold.otf</string>
     <string name="regular_text">SFCompactText_Regular.otf</string>
     <string name="italic_text">SFCompactText_RegularItalic.otf</string>
+    <string name="retry">Retry</string>
 
 </resources>

@@ -482,6 +482,7 @@ public class FrameViewLayout extends RevealFrameLayout {
 
             tvProgressTitle = progressView.findViewById(R.id.progress_title);
             tvProgressDesc = progressView.findViewById(R.id.progress_desc);
+            btnProgressButton = progressView.findViewById(R.id.btnAction);
 
             addView(this.progressView, layoutParams);
             setProgressViewSize(size, gravity);
@@ -552,6 +553,10 @@ public class FrameViewLayout extends RevealFrameLayout {
 
             layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT);
+            tvEmptyTitle = progressView.findViewById(R.id.progress_title);
+            tvEmptyDesc = progressView.findViewById(R.id.progress_desc);
+            btnEmptyButton = progressView.findViewById(R.id.btnAction);
+
             addView(this.emptyView, layoutParams);
             setEmptyViewSize(size, gravity);
         } catch (Exception e) {
@@ -573,6 +578,10 @@ public class FrameViewLayout extends RevealFrameLayout {
 
             layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT);
+            tvErrorTitle = progressView.findViewById(R.id.progress_title);
+            tvErrorDesc = progressView.findViewById(R.id.progress_desc);
+            btnErrorButton = progressView.findViewById(R.id.btnAction);
+
             addView(this.errorView, layoutParams);
             setErrorViewSize(size, gravity);
         } catch (Exception e) {

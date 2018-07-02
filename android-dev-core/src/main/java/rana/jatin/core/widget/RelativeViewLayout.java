@@ -483,6 +483,7 @@ public class RelativeViewLayout extends RevealRelativeLayout {
 
             tvProgressTitle = progressView.findViewById(R.id.progress_title);
             tvProgressDesc = progressView.findViewById(R.id.progress_desc);
+            btnProgressButton = progressView.findViewById(R.id.btnAction);
 
             addView(this.progressView, layoutParams);
             setProgressViewSize(size, gravity);
@@ -565,6 +566,10 @@ public class RelativeViewLayout extends RevealRelativeLayout {
             if (margin != null)
                 layoutParams.setMargins(margin[0], margin[1], margin[2], margin[3]);
 
+            tvEmptyTitle = progressView.findViewById(R.id.progress_title);
+            tvEmptyDesc = progressView.findViewById(R.id.progress_desc);
+            btnEmptyButton = progressView.findViewById(R.id.btnAction);
+
             addView(this.emptyView, layoutParams);
             setEmptyViewSize(size, gravity);
         } catch (Exception e) {
@@ -588,6 +593,11 @@ public class RelativeViewLayout extends RevealRelativeLayout {
                     ViewGroup.LayoutParams.MATCH_PARENT);
             if (margin != null)
                 layoutParams.setMargins(margin[0], margin[1], margin[2], margin[3]);
+
+            tvErrorTitle = progressView.findViewById(R.id.progress_title);
+            tvErrorDesc = progressView.findViewById(R.id.progress_desc);
+            btnErrorButton = progressView.findViewById(R.id.btnAction);
+
             addView(this.errorView, layoutParams);
             setErrorViewSize(size, gravity);
         } catch (Exception e) {
