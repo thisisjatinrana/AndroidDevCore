@@ -8,24 +8,11 @@ import rana.jatin.core.util.FragmentUtil;
 /**
  * Super class for all setModel {@link BaseIntent#setModel(Model)}
  * {@link FragmentUtil#setModel(Model)}
- * in project. Contains {@link #modelId} as unique setId for each object
+ * in project.
  */
 public class Model implements Serializable {
-    private long modelId;
 
     public Model() {
-    }
-
-    public Model(long modelId) {
-        this.modelId = modelId;
-    }
-
-    public long getModelId() {
-        return modelId;
-    }
-
-    public void setModelId(long modelId) {
-        this.modelId = modelId;
     }
 
 }

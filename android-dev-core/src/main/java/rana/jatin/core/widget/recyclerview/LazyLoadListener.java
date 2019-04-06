@@ -1,6 +1,6 @@
 package rana.jatin.core.widget.recyclerview;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by jatin on 6/8/2017.

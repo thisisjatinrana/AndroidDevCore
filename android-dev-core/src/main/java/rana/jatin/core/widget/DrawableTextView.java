@@ -4,9 +4,6 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
-import android.support.annotation.DimenRes;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.ViewGroup;
@@ -14,8 +11,11 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.DimenRes;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.core.content.ContextCompat;
 import rana.jatin.core.R;
-import rana.jatin.core.util.Util;
+import rana.jatin.core.util.MiscUtils;
 
 /**
  * Created by jatin on 7/17/2017.
@@ -135,7 +135,7 @@ public class DrawableTextView extends RelativeLayout {
         rightImageView = new AppCompatImageView(getContext());
         rightImageView.setImageResource(mRightIcon);
         rightImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        rightImageView.setId(Util.getInstance().generateViewId());
+        rightImageView.setId(MiscUtils.generateViewId());
         p = new RelativeLayout.LayoutParams(mRightIconSize,
                 mRightIconSize);
         p.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
@@ -147,7 +147,7 @@ public class DrawableTextView extends RelativeLayout {
         textView.setText(iconText);
         textView.setTextColor(iconTextColor);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, iconTextSize);
-        textView.setId(Util.getInstance().generateViewId());
+        textView.setId(MiscUtils.generateViewId());
 
         if (!typeFace.isEmpty()) {
             Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/" + typeFace);
@@ -212,7 +212,7 @@ public class DrawableTextView extends RelativeLayout {
         leftImageView = new AppCompatImageView(getContext());
         leftImageView.setImageResource(mLeftIcon);
         leftImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        leftImageView.setId(Util.getInstance().generateViewId());
+        leftImageView.setId(MiscUtils.generateViewId());
         p = new RelativeLayout.LayoutParams(mLeftIconSize,
                 mLeftIconSize);
         p.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
@@ -224,7 +224,7 @@ public class DrawableTextView extends RelativeLayout {
         textView.setText(iconText);
         textView.setTextColor(iconTextColor);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, iconTextSize);
-        textView.setId(Util.getInstance().generateViewId());
+        textView.setId(MiscUtils.generateViewId());
 
         if (!typeFace.isEmpty()) {
             Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/" + typeFace);
@@ -290,7 +290,7 @@ public class DrawableTextView extends RelativeLayout {
         textView.setText(iconText);
         textView.setTextColor(iconTextColor);
         textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, iconTextSize);
-        textView.setId(Util.getInstance().generateViewId());
+        textView.setId(MiscUtils.generateViewId());
 
         if (!typeFace.isEmpty()) {
             Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/" + typeFace);

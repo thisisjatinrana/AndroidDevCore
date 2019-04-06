@@ -9,7 +9,7 @@ import android.widget.EditText;
 import java.util.regex.Pattern;
 
 /**
- * Util class for validating data and input fields
+ * CoreUtil class for validating data and input fields
  */
 
 public class ValidationUtil {
@@ -149,7 +149,7 @@ public class ValidationUtil {
 
     public synchronized boolean validateUsernameWithoutSpace(EditText view,
                                                              String message) {
-        if (view.getText().toString().toString().contains(" ")) {
+        if (view.getText().toString().contains(" ")) {
             if (message == null || message.isEmpty())
                 message = "This input does not fit the requiered pattern.";
             ForegroundColorSpan fgcspan = new ForegroundColorSpan(Color.WHITE);
@@ -164,7 +164,7 @@ public class ValidationUtil {
     }
 
     public synchronized boolean validateUsernameSpace(EditText view, String message) {
-        if (view.getText().toString().toString().trim().equalsIgnoreCase("")) {
+        if (view.getText().toString().trim().equalsIgnoreCase("")) {
             if (message == null || message.isEmpty())
                 message = "This field should not be empty.";
             ForegroundColorSpan fgcspan = new ForegroundColorSpan(Color.WHITE);

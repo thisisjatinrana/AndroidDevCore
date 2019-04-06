@@ -3,9 +3,9 @@ package rana.jatin.core.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
-import android.support.v7.widget.AppCompatRadioButton;
 import android.util.AttributeSet;
 
+import androidx.appcompat.widget.AppCompatRadioButton;
 import rana.jatin.core.R;
 
 

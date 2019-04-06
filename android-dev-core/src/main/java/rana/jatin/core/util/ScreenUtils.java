@@ -18,7 +18,6 @@ package rana.jatin.core.util;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.WindowManager;
 
 
@@ -52,12 +51,6 @@ public final class ScreenUtils {
             result = context.getResources().getDimensionPixelSize(resourceId);
         }
         return result;
-    }
-
-    /* convert DP to PX */
-    public static float dipToPixels(Context context, float dipValue) {
-        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, metrics);
     }
 
 

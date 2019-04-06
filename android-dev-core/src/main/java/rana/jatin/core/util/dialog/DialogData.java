@@ -1,6 +1,6 @@
 package rana.jatin.core.util.dialog;
 
-import android.support.annotation.DrawableRes;
+import androidx.annotation.DrawableRes;
 
 /**
  * Created by jatin on 5/23/2017.

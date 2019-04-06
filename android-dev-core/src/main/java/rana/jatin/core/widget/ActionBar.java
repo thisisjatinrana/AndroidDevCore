@@ -8,8 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.AppCompatImageView;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.ViewGroup;
@@ -17,8 +16,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.core.content.ContextCompat;
 import rana.jatin.core.R;
-import rana.jatin.core.util.Util;
+import rana.jatin.core.util.MiscUtils;
 
 /**
  * A super powered action bar which supports left,right,center text view with drawables
@@ -134,7 +135,7 @@ public class ActionBar extends RelativeLayout {
         centerTextView.setText(centericonText);
         centerTextView.setTextColor(centerTextColor);
         centerTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mCenterTextSize);
-        centerTextView.setId(Util.getInstance().generateViewId());
+        centerTextView.setId(MiscUtils.generateViewId());
 
         if (!centerTypeFace.isEmpty()) {
             Typeface tf = Typeface.createFromAsset(getContext().getAssets(),
@@ -160,7 +161,7 @@ public class ActionBar extends RelativeLayout {
         leftImageView = new AppCompatImageView(getContext());
         leftImageView.setImageResource(mLeftIcon);
         leftImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        leftImageView.setId(Util.getInstance().generateViewId());
+        leftImageView.setId(MiscUtils.generateViewId());
         p = new LayoutParams(mLeftIconSize,
                 mLeftIconSize);
         p.addRule(RelativeLayout.ALIGN_PARENT_START);
@@ -184,7 +185,9 @@ public class ActionBar extends RelativeLayout {
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         p.addRule(RelativeLayout.END_OF, leftImageView.getId());
         p.addRule(RelativeLayout.CENTER_VERTICAL);
-        p.setMarginStart(padding);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            p.setMarginStart(padding);
+        }
         leftTextView.setLayoutParams(p);
         this.addView(leftTextView);
 
@@ -192,7 +195,7 @@ public class ActionBar extends RelativeLayout {
         rightImageView = new AppCompatImageView(getContext());
         rightImageView.setImageResource(mRightIcon);
         rightImageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        rightImageView.setId(Util.getInstance().generateViewId());
+        rightImageView.setId(MiscUtils.generateViewId());
         p = new LayoutParams(mRightIconSize,
                 mRightIconSize);
         p.addRule(RelativeLayout.ALIGN_PARENT_END);

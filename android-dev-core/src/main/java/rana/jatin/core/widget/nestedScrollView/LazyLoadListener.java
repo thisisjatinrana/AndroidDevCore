@@ -1,6 +1,6 @@
 package rana.jatin.core.widget.nestedScrollView;
 
-import android.support.v4.widget.NestedScrollView;
+import androidx.core.widget.NestedScrollView;
 
 /**
  * Created by jatin on 6/8/2017.

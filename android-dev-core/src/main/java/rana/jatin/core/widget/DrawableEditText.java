@@ -8,9 +8,8 @@ import android.graphics.Canvas;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Handler;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.AppCompatImageView;
 import android.text.InputFilter;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -22,6 +21,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.core.content.ContextCompat;
 import rana.jatin.core.R;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
@@ -215,11 +216,13 @@ public class DrawableEditText extends LinearLayout implements View.OnClickListen
             editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)});
         }
         if (background != null)
-            editText.setBackground(background);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                editText.setBackground(background);
+            }
         if (backgroundColor != -1)
             editText.setBackgroundColor(backgroundColor);
 
-        LinearLayout.LayoutParams p = new LayoutParams(mLeftIconSize,
+        LayoutParams p = new LayoutParams(mLeftIconSize,
                 mLeftIconSize);
         p.setMargins(0, 0, mLeftIconPadding, 0);
         leftImageView.setImageResource(mLeftIcon);

@@ -6,10 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.v4.app.Fragment;
 
 import java.io.Serializable;
 
+import androidx.fragment.app.Fragment;
 import rana.jatin.core.model.Model;
 
 /*
@@ -38,6 +38,9 @@ public class BaseIntent extends Intent {
             }, 3000);
 
         }
+    }
+
+    public BaseIntent() {
     }
 
     public BaseIntent(Context context, Class<?> cls) {

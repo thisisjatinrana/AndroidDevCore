@@ -1,9 +1,10 @@
 package rana.jatin.core.widget.nestedScrollView;
 
 import android.content.Context;
-import android.support.v4.widget.NestedScrollView;
 import android.util.AttributeSet;
 import android.util.Log;
+
+import androidx.core.widget.NestedScrollView;
 /*
 *  BasicNestedScrollView is a super-powered {@link android.support.v4.widget.NestedScrollView}
 */

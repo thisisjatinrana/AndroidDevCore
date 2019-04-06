@@ -1,20 +1,19 @@
 package rana.jatin.core.widget.recyclerview;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.AttributeSet;
 import android.view.View;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.RecyclerView;
+
 /*
-*  BasicRecyclerView is a super-powered {@link android.support.v7.widget.RecyclerView}
-*/
+ *  BasicRecyclerView is a super-powered {@link android.support.v7.widget.RecyclerView}
+ */
 public class BasicRecyclerView extends RecyclerView {
 
     private View emptyView;
-    private OnSwipeHelper onSwipeHelper;
-    private LazyLoadingHelper lazyLoadingHelper;
     final AdapterDataObserver observer = new AdapterDataObserver() {
         @Override
         public void onChanged() {
@@ -22,6 +21,8 @@ public class BasicRecyclerView extends RecyclerView {
             checkIfEmpty();
         }
     };
+    private OnSwipeHelper onSwipeHelper;
+    private LazyLoadingHelper lazyLoadingHelper;
 
     public BasicRecyclerView(Context context) {
         super(context);
@@ -59,29 +60,38 @@ public class BasicRecyclerView extends RecyclerView {
         checkIfEmpty();
     }
 
-    public void setOnSwipeListener(OnSwipeListener onSwipeListener)
-    {
+    public void setOnSwipeListener(OnSwipeListener onSwipeListener) {
         onSwipeHelper = new OnSwipeHelper(onSwipeListener);
         ItemTouchHelper helper = new ItemTouchHelper(onSwipeHelper);
         helper.attachToRecyclerView(this);
     }
 
-    public void setLazyLoadListener(LazyLoadListener lazyLoadListener){
-        lazyLoadingHelper =new LazyLoadingHelper(lazyLoadListener);
+    public void setLazyLoadListener(LazyLoadListener lazyLoadListener) {
+        lazyLoadingHelper = new LazyLoadingHelper(lazyLoadListener);
+        this.addOnScrollListener(lazyLoadingHelper);
     }
 
     public void resetLazyLoadListener() {
         lazyLoadingHelper.reset();
     }
 
-    public void isSwipeEnabled(boolean isEnable){
+    public void isSwipeEnabled(boolean isEnable) {
         onSwipeHelper.setSwipeEnabled(isEnable);
     }
-    public void isLongPressDragEnabled(Boolean isEnable){
+
+    public void isLongPressDragEnabled(Boolean isEnable) {
         onSwipeHelper.isLongPressDragEnabled(isEnable);
     }
 
-    public void isScrollingEnabled(boolean isEnable){
+    public void isScrollingEnabled(boolean isEnable) {
         lazyLoadingHelper.setPrevScroll(isEnable);
+    }
+
+    public boolean isLoading() {
+        return this.lazyLoadingHelper.isLoading();
+    }
+
+    public void setLoading(boolean loading) {
+        this.lazyLoadingHelper.setLoading(loading);
     }
 }

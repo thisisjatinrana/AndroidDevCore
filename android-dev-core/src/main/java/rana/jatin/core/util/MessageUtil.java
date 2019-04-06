@@ -1,153 +1,41 @@
 package rana.jatin.core.util;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Rect;
-import android.net.Uri;
 import android.os.Handler;
-import android.provider.Settings;
-import android.support.annotation.StringRes;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import rana.jatin.core.R;
+import com.google.android.material.snackbar.Snackbar;
 
-import static android.content.Context.INPUT_METHOD_SERVICE;
+import androidx.annotation.StringRes;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import rana.jatin.core.R;
 
 /**
  * Contains set of utils for popups, toasts, snack bar etc
  */
-public class ViewUtil {
+public class MessageUtil {
 
     private int snackViewId;
     private int snackTxtColor = R.color.black;
     private int snackBackground = R.color.white;
     private int snackActionColor = R.color.red;
-    private boolean keyboardOpen;
     private Activity activity;
     private Fragment fragment;
     private Snackbar snackbar;
-    private KeyboardListener keyboardListener;
 
-    public ViewUtil(Activity activity) {
+    public MessageUtil(Activity activity) {
         this.activity = activity;
     }
 
-    public ViewUtil(Activity activity, Fragment fragment) {
+    public MessageUtil(Activity activity, Fragment fragment) {
         this.activity = activity;
         this.fragment = fragment;
     }
 
-    /* open android app settings */
-    public void openAppSettings() {
-        Intent intent = new Intent();
-        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        Uri uri = Uri.fromParts("package", activity.getPackageName(), null);
-        intent.setData(uri);
-        activity.startActivity(intent);
-    }
-
-    /* show soft keyboard */
-    public void showSoftInput(final EditText editText) {
-
-        Handler mHandler = new Handler();
-        mHandler.post(
-                new Runnable() {
-                    public void run() {
-                        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(INPUT_METHOD_SERVICE);
-                        inputMethodManager.toggleSoftInputFromWindow(editText.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
-                        editText.requestFocus();
-                    }
-                });
-    }
-
-    /* hide soft keyboard*/
-    public void toggleSoftInput() {
-
-        if (!keyboardOpen)
-            return;
-        Handler mHandler = new Handler();
-        mHandler.post(
-                new Runnable() {
-                    public void run() {
-                        InputMethodManager inputManager = (InputMethodManager) activity.getSystemService(INPUT_METHOD_SERVICE);
-                        inputManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
-                        keyboardOpen = false;
-                    }
-                });
-    }
-
-    // This utility method is used with fragment
-    // view = getView().getRootView();
-    // view = fragment.getView();
-    public void hideKeyboardFrom(Context context, View view) {
-        if (view == null)
-            view = new View(activity);
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        view.clearFocus();
-        keyboardOpen = false;
-    }
-
-    // This utility method ONLY works when called from an Activity
-    public void hideKeyboard() {
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        //Find the currently focused view, so we can grab the correct window token from it.
-        View view = activity.getCurrentFocus();
-        //If no view currently has focus, create a new one, just so we can grab a window token from it
-        if (view == null) {
-            view = new View(activity);
-        }
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        view.clearFocus();
-        keyboardOpen = false;
-    }
-
-    /*
-     * return true if soft keyboardOpen open else false if soft keyboardOpen closed
-     */
-    public boolean isKeyboardOpen() {
-        return keyboardOpen;
-    }
-
-    public void setKeyboardListener(final KeyboardListener keyboardListener) {
-        this.keyboardListener = keyboardListener;
-        final View activityRootView = activity.getWindow().getDecorView().findViewById(android.R.id.content);
-        activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-
-                Rect r = new Rect();
-                activityRootView.getWindowVisibleDisplayFrame(r);
-                int screenHeight = activityRootView.getRootView().getHeight();
-                // r.bottom is the position above soft keypad or device button.
-                // if keypad is shown, the r.bottom is smaller than that before.
-                int keypadHeight = screenHeight - r.bottom;
-                if (keypadHeight > screenHeight * 0.15) { // 0.15 ratio is perhaps enough to determine keypad height.
-                    // keyboardOpen is opened
-                    keyboardOpen = true;
-                    keyboardListener.onKeyboardOpen();
-                } else {
-                    keyboardOpen = false;
-                    final Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            keyboardListener.onKeyboardClosed();
-                        }
-                    }, 100);
-                }
-            }
-        });
-    }
 
     /* show a toast message
      *  @param message to show
@@ -187,7 +75,7 @@ public class ViewUtil {
                     snackbar = Snackbar
                             .make(activity.findViewById(snackViewId), message, Snackbar.LENGTH_LONG);
                     View snackbarView = snackbar.getView();
-                    TextView textView = snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+                    TextView textView = snackbarView.findViewById(R.id.snackbar_text);
                     textView.setMaxLines(5);
                     setSnackBackground(snackBackground);
                     setSnackActionTextColor(snackActionColor);
@@ -213,7 +101,7 @@ public class ViewUtil {
                     snackbar = Snackbar
                             .make(activity.findViewById(snackViewId), activity.getString(message), Snackbar.LENGTH_LONG);
                     View snackbarView = snackbar.getView();
-                    TextView textView = snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+                    TextView textView = snackbarView.findViewById(R.id.snackbar_text);
                     textView.setMaxLines(5);
                     setSnackBackground(snackBackground);
                     setSnackActionTextColor(snackActionColor);
@@ -238,7 +126,7 @@ public class ViewUtil {
                     showSnack(activity.getString(R.string.message_permissions_reject), activity.getString(R.string.settings), new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            openAppSettings();
+                            IntentUtil.openAppSettings(activity);
                         }
                     });
                 } catch (Exception e) {
@@ -264,7 +152,7 @@ public class ViewUtil {
                             .make(activity.findViewById(snackViewId), message, Snackbar.LENGTH_LONG)
                             .setAction(actionText, onClickListener);
                     View snackbarView = snackbar.getView();
-                    TextView textView = snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+                    TextView textView = snackbarView.findViewById(R.id.snackbar_text);
                     textView.setMaxLines(5);
                     setSnackBackground(snackBackground);
                     setSnackActionTextColor(snackActionColor);
@@ -292,7 +180,7 @@ public class ViewUtil {
                             .make(activity.findViewById(snackViewId), message, Snackbar.LENGTH_INDEFINITE)
                             .setAction(actionText, onClickListener);
                     View snackbarView = snackbar.getView();
-                    TextView textView = snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+                    TextView textView = snackbarView.findViewById(R.id.snackbar_text);
                     textView.setMaxLines(5);
                     setSnackBackground(snackBackground);
                     setSnackActionTextColor(snackActionColor);
@@ -328,7 +216,7 @@ public class ViewUtil {
                             .make(activity.findViewById(snackViewId), message, Snackbar.LENGTH_INDEFINITE)
                             .setAction(actionText, onClickListener);
                     View snackbarView = snackbar.getView();
-                    TextView textView = snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+                    TextView textView = snackbarView.findViewById(R.id.snackbar_text);
                     textView.setMaxLines(5);
                     setSnackBackground(snackBackground);
                     setSnackActionTextColor(snackActionColor);
@@ -354,7 +242,7 @@ public class ViewUtil {
                     snackbar = Snackbar
                             .make(activity.findViewById(snackViewId), message, Snackbar.LENGTH_INDEFINITE);
                     View snackbarView = snackbar.getView();
-                    TextView textView = snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+                    TextView textView = snackbarView.findViewById(R.id.snackbar_text);
                     textView.setMaxLines(5);
                     setSnackBackground(snackBackground);
                     setSnackActionTextColor(snackActionColor);
@@ -371,7 +259,7 @@ public class ViewUtil {
      * set snack bar view id
      * @param id of view on which to make snack bar ( in most cases coordinator layout )
      */
-    public ViewUtil makeSnackBar(int id) {
+    public MessageUtil makeSnackBar(int id) {
         snackViewId = id;
         return this;
     }
@@ -386,11 +274,11 @@ public class ViewUtil {
      * @param textColor color resource id
      * return self
      */
-    public ViewUtil setSnackTextColor(int textColor) {
+    public MessageUtil setSnackTextColor(int textColor) {
         snackTxtColor = textColor;
         if (snackbar != null) {
             View snackbarView = snackbar.getView();
-            TextView textView = snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+            TextView textView = snackbarView.findViewById(R.id.snackbar_text);
             textView.setTextColor(ContextCompat.getColor(activity, textColor));
         }
         return this;
@@ -401,10 +289,20 @@ public class ViewUtil {
      * @param textColor color resource id
      * return self
      */
-    public ViewUtil setSnackActionTextColor(int textColor) {
+    public MessageUtil setSnackActionTextColor(int textColor) {
         snackActionColor = textColor;
         if (snackbar != null)
             snackbar.setActionTextColor(ContextCompat.getColor(activity, textColor));
+        return this;
+    }
+
+    /*
+     * dismiss snack bar
+     * return self
+     */
+    public MessageUtil dismissSnack() {
+        if (snackbar != null)
+            snackbar.dismiss();
         return this;
     }
 
@@ -413,7 +311,7 @@ public class ViewUtil {
      * @param background color resource id
      * return self
      */
-    public ViewUtil setSnackBackground(int background) {
+    public MessageUtil setSnackBackground(int background) {
         snackBackground = background;
         if (snackbar != null)
             snackbar.getView().setBackgroundColor(ContextCompat.getColor(activity, background));
@@ -438,9 +336,5 @@ public class ViewUtil {
         return activity == null || !fragment.isAdded() || fragment.isRemoving() || fragment.isDetached();
     }
 
-    public interface KeyboardListener {
-        void onKeyboardOpen();
 
-        void onKeyboardClosed();
-    }
 }

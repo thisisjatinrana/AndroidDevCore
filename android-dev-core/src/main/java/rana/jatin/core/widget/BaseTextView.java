@@ -3,9 +3,9 @@ package rana.jatin.core.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
-import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 
+import androidx.appcompat.widget.AppCompatTextView;
 import rana.jatin.core.R;
 
 public class BaseTextView extends AppCompatTextView {

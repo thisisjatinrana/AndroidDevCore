@@ -1,10 +1,11 @@
 package rana.jatin.core.widget.viewPager;
 
 import android.content.Context;
-import android.support.v4.view.MotionEventCompat;
-import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
+
+import androidx.core.view.MotionEventCompat;
+import androidx.viewpager.widget.ViewPager;
 
 public class BasicViewPager extends ViewPager {
     private boolean swipeEnabled = true;
