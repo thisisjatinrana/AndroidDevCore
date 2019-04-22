@@ -1,5 +1,5 @@
 # AndroidDevCore
-Android essential building blocks to speed up development process 
+Android essential building blocks to speed up development process ( Migrated to andoridX )
 [ ![Download](https://api.bintray.com/packages/thisisjatinrana/dev/android-dev-core/images/download.svg) ](https://bintray.com/thisisjatinrana/dev/android-dev-core/_latestVersion)
 
 # Usage
@@ -11,7 +11,7 @@ For a working implementation of this library visit http://www.appspoetry.com/and
 You can grab the library via Jcenter. Just add a proper dependency inside your build.gradle. Like this:
 
 dependencies {
-    compile 'com.jatin:android-dev-core:5.0.1'
+    compile 'com.jatin:android-dev-core:5.0.5'
 }
 
 # Developed by
