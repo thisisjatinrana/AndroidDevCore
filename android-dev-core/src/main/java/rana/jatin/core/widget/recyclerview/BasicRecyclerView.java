@@ -66,8 +66,10 @@ public class BasicRecyclerView extends RecyclerView {
         helper.attachToRecyclerView(this);
     }
 
-    public void setLazyLoadListener(LazyLoadListener lazyLoadListener) {
+    public void setLazyLoadListener(LazyLoadListener lazyLoadListener, int page) {
         lazyLoadingHelper = new LazyLoadingHelper(lazyLoadListener);
+        lazyLoadingHelper.setNextPage(page);
+        lazyLoadingHelper.setPrevPage(page);
         this.addOnScrollListener(lazyLoadingHelper);
     }
 
@@ -93,5 +95,25 @@ public class BasicRecyclerView extends RecyclerView {
 
     public void setLoading(boolean loading) {
         this.lazyLoadingHelper.setLoading(loading);
+    }
+
+    public View getEmptyView() {
+        return emptyView;
+    }
+
+    public OnSwipeHelper getOnSwipeHelper() {
+        return onSwipeHelper;
+    }
+
+    public LazyLoadingHelper getLazyLoadingHelper() {
+        return lazyLoadingHelper;
+    }
+
+    public void setNextPage(int page) {
+        lazyLoadingHelper.setNextPage(page);
+    }
+
+    public void setPrevPage(int page) {
+        lazyLoadingHelper.setPrevPage(page);
     }
 }

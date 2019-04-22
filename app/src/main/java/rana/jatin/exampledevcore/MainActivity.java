@@ -1,7 +1,11 @@
 package rana.jatin.exampledevcore;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.net.Uri;
 import android.os.Bundle;
+
+import java.util.List;
 
 import rana.jatin.core.base.BaseActivity;
 import rana.jatin.core.mediaPicker.MediaPicker;
@@ -25,10 +29,18 @@ public class MainActivity extends BaseActivity {
         messageUtil = new MessageUtil(this);
         RxBus.get().send(101, "hi");
         MediaPicker.from(this)
-                .choose(MimeType.ofImage())
-                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
-                .imageEngine(new GlideEngine()).capture(true).captureStrategy(new CaptureStrategy(true, "com.vemeet.provider", "vemeet"))
-                .forResult(IntentUtil.PICK_IMAGE_CODE);
+                .choose(MimeType.ofAll(), false).capture(true)
+                .captureStrategy(new CaptureStrategy(true, "com.app.provider", true, true))
+                .countable(true).maxSelectable(5)
+                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                .imageEngine(new GlideEngine())
+                .forResult(IntentUtil.PICK_IMAGE_VIDEO_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        List<Uri> mSelected = MediaPicker.obtainResult(data);
     }
 
     @Subscribe(code = 101, threadMode = ThreadMode.MAIN_THREAD)

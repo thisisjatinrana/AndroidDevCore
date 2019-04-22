@@ -2,14 +2,15 @@ package rana.jatin.core.util;
 
 import android.os.Bundle;
 
-import java.io.Serializable;
-
 import androidx.annotation.IdRes;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import java.io.Serializable;
+
 import rana.jatin.core.R;
 import rana.jatin.core.base.Extras;
 import rana.jatin.core.model.Model;
@@ -22,7 +23,7 @@ public class FragmentUtil {
     private String TAG = FragmentUtil.class.getName();
     private Fragment fragment;
     private int container;
-    private boolean replace = false, addToStack = true;
+    private boolean replace = false, addToStack = true, refresh = false;
     private int animExit = R.anim.fragment_out;
     private int animEnter = R.anim.fragment_in;
     private Bundle extras = null;
@@ -126,6 +127,17 @@ public class FragmentUtil {
     }
 
     /**
+     * Set flag to refresh fragment if already in container
+     *
+     * @param refresh true to reload fragment and refresh content if fragment is already in container
+     * @return self
+     */
+    public FragmentUtil refresh(boolean refresh) {
+        this.refresh = refresh;
+        return this;
+    }
+
+    /**
      * Same as {@link #skipStack(boolean)} with true parameter
      *
      * @return self
@@ -196,8 +208,11 @@ public class FragmentUtil {
 
         String backStateName = fragment.getClass().getName();
         Fragment current = fragmentManager.findFragmentById(container);
-        if (equal(fragment, current))
+        if (equal(fragment, current)) {
+            if (refresh)
+                reLoadFragment(fragment);
             return false;
+        }
 
         Bundle args = fragment.getArguments();
         if (args == null) {

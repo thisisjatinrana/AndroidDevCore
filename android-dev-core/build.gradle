@@ -3,7 +3,7 @@ apply plugin: 'com.android.library'
 ext {
     PUBLISH_GROUP_ID = 'com.jatin'
     PUBLISH_ARTIFACT_ID = 'android-dev-core'
-    PUBLISH_VERSION = '5.0.3'
+    PUBLISH_VERSION = '5.0.5'
 }
 
 android {
@@ -12,8 +12,8 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 8
-        versionName "5.3"
+        versionCode 10
+        versionName "5.5"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -32,10 +32,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    compileOptions {
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
-    }
+   
 }
 
 dependencies {
